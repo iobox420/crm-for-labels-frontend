@@ -1,0 +1,28 @@
+@import "pages/login/Login.scss";
+@import "pages/registration/Registration.scss";
+@import "pages/panel/Panel.scss";
+
+.app-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  
+}
+
+.dflex {
+  display: flex;
+}
+.aicenter {
+  align-items: center;
+}
+.jccenter {
+  justify-content: center;
+}
+.fdcolumn {
+  flex-direction: column;
+}
+.fdrow {
+  flex-direction: row;
+}
