@@ -1,0 +1,7 @@
+node_modules
+.idea/
+src/.sass-cache/
+.DS_Store
+dist
+dist-ssr
+*.local
