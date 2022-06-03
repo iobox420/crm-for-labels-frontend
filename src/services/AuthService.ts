@@ -1,15 +1,16 @@
 import $api from '../http'
 import { AxiosResponse } from 'axios'
 import { AuthResponse } from '../models/response/AuthResponse'
+import { signup } from '@/redux/authSlice'
 
 export default class AuthService {
   static async login(email: string, password: string): Promise<AxiosResponse<AuthResponse>> {
     return $api.post<AuthResponse>('/login', { email, password })
   }
 
-  static async registration(email: string, password: string): Promise<AxiosResponse<AuthResponse>> {
+  static async signup(email: string, password: string): Promise<AxiosResponse<AuthResponse>> {
     console.log(email, password)
-    return $api.post<AuthResponse>('/signin', { email, password })
+    return $api.post<AuthResponse>('/signup', { email, password })
   }
 
   static async logout(): Promise<void> {

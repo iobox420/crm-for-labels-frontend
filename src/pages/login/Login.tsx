@@ -3,7 +3,7 @@ import { Form, Input, Button, Checkbox, Typography } from 'antd'
 
 const { Title } = Typography
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '@/redux/authSlice'
 
@@ -72,7 +72,7 @@ const Login: React.FC = () => {
           <Button type="primary" htmlType="submit" className="login-form-button">
             Log in
           </Button>
-          Or <a href="">register now!</a>
+          Or <Link to={'/signup'}>register now!</Link>
         </Form.Item>
       </Form>
     </div>

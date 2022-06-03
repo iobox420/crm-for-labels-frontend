@@ -11,7 +11,7 @@ import {
   Button,
   AutoComplete,
 } from 'antd'
-import { login, registration } from '@/redux/authSlice'
+import { login, signup } from '@/redux/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
@@ -97,7 +97,7 @@ const Registration = () => {
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values)
     dispatch<any>(
-      registration({
+      signup({
         email: values.email,
         password: values.password,
       }),

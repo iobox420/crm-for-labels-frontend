@@ -73,7 +73,7 @@ const items: MenuProps['items'] = [
   },
 ]
 const { Header, Footer, Content } = Layout
-const Panel = () => {
+const AdminPanel = () => {
   const dispatch = useDispatch()
   // @ts-ignore
   const isAuth = useSelector(({ auth }) => {
@@ -133,4 +133,4 @@ const Panel = () => {
   )
 }
 
-export default Panel
+export default AdminPanel

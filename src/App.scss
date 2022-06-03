@@ -1,15 +1,5 @@
-@import "pages/login/Login.scss";
+@import "pages/login/Login";
 @import "pages/registration/Registration.scss";
-@import "pages/panel/Panel.scss";
-
-.app-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  
-}
 
 .dflex {
   display: flex;

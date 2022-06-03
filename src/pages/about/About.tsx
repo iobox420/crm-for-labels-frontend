@@ -1,6 +1,6 @@
 import React from 'react'
-const Page404 = () => {
+const About = () => {
   return <div>About page</div>
 }
 
-export default Page404
+export default About
