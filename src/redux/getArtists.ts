@@ -1,4 +1,5 @@
 import AdminService from '@/services/AdminService'
+import { setAboutMe } from '@/redux/artistSlice'
 import { setArtists } from '@/redux/adminSlice'
 
 export const getArtists = () => {
