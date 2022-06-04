@@ -7,63 +7,19 @@ import { logout } from '@/redux/authSlice'
 
 const items: MenuProps['items'] = [
   {
-    label: 'Art',
+    label: 'Admin',
     key: 'SubMenu',
     icon: <UnorderedListOutlined />,
     children: [
       {
         type: 'group',
-        label: 'My art',
+        label: 'Artists',
         children: [
           {
-            label: 'Tracks',
-            key: 'key-tracks',
-          },
-          {
-            label: 'Albums',
-            key: 'key-albums',
-          },
-          {
-            label: 'Releases',
-            key: 'key-releases',
+            label: 'All artists',
+            key: 'key-all-artists',
           },
         ],
-      },
-      {
-        type: 'group',
-        label: 'Analytics',
-        children: [
-          {
-            label: 'Analytics',
-            key: 'key-analytics',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: 'Docs',
-    key: 'SubMenu4',
-    icon: <FileTextOutlined />,
-    children: [
-      {
-        label: 'My contract',
-        key: 'key-my-contract',
-      },
-      {
-        label: 'Acts',
-        key: 'key-acts',
-      },
-    ],
-  },
-  {
-    label: 'Profile',
-    key: 'SubMenu3',
-    icon: <UserOutlined />,
-    children: [
-      {
-        label: 'About me',
-        key: 'key-about-me',
       },
       {
         label: 'Exit',
@@ -86,15 +42,10 @@ const AdminPanel = () => {
     setCurrent(e.key)
     console.log('click ', e)
     switch (e.key) {
-      case 'key-about-me':
-        navigate('about-me')
+      case 'key-all-artists':
+        navigate('artists')
         break
-      case 'key-my-contract':
-        navigate('my-contract')
-        break
-      case 'key-acts':
-        navigate('acts')
-        break
+
       case 'key-exit':
         // @ts-ignore
         dispatch(logout())

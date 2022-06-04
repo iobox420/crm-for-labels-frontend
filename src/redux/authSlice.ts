@@ -1,10 +1,11 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+// @ts-nocheck
+
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import AuthService from '@/services/AuthService'
 import { IUser } from '@/models/IUser'
 import axios from 'axios'
 import { AuthResponse } from '@/models/response/AuthResponse'
 import config from '../config'
-import { useNavigate } from 'react-router-dom'
 
 interface IAuthData {
   email: string
@@ -43,7 +44,7 @@ export const signup = createAsyncThunk(
 )
 export const logout = createAsyncThunk('auth/logout', async (arg: void, { dispatch }) => {
   try {
-    const response = await AuthService.logout()
+    await AuthService.logout()
     localStorage.removeItem('token')
     dispatch(setAuth(false))
     dispatch(setUser({} as IUser))
@@ -71,27 +72,52 @@ export const checkAuth = createAsyncThunk('auth/checkAuth', async (arg: void, { 
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    user: {} as IUser,
+    user: {
+      email: 'string',
+      id_user: 'string',
+      role: 'string',
+    } as IUser,
     isAuth: false,
     isLoading: false,
   },
   reducers: {
     setAuth(state, action) {
       state.isAuth = action.payload
+      if (action.payload) {
+        localStorage.setItem('isAuth', 'true')
+      } else {
+        localStorage.setItem('isAuth', 'false')
+      }
     },
 
     setUser(state, action) {
       state.user = {
         ...action.payload,
       }
+      localStorage.setItem('email', action.payload.email)
+      localStorage.setItem('id_user', action.payload.id_user)
+      localStorage.setItem('role', action.payload.role)
     },
 
     setLoading(state, action) {
       state.isLoading = action.payload
+    },
+    extractAuthData(state) {
+      const isAuth = localStorage.getItem('isAuth')
+      if (isAuth) {
+        if (isAuth === 'true') {
+          state.isAuth = true
+        } else {
+          state.isAuth = false
+        }
+        state.user.email = localStorage.getItem('email')
+        state.user.id_user = localStorage.getItem('id_user')
+        state.user.role = localStorage.getItem('role')
+      }
     },
   },
 })
 
 export default authSlice.reducer
 
-export const { setAuth, setUser, setLoading } = authSlice.actions
+export const { setAuth, setUser, setLoading, extractAuthData } = authSlice.actions

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+// @ts-nocheck
+import React, { useEffect, useState } from 'react'
 import { Layout, Menu, MenuProps } from 'antd'
 import { FileTextOutlined, UnorderedListOutlined, UserOutlined } from '@ant-design/icons'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
@@ -76,9 +77,7 @@ const { Header, Footer, Content } = Layout
 const Panel = () => {
   const dispatch = useDispatch()
   // @ts-ignore
-  const isAuth = useSelector(({ auth }) => {
-    return auth.isAuth
-  })
+
   const [current, setCurrent] = useState('mail')
   let url = useLocation().pathname
   let navigate = useNavigate()
@@ -104,9 +103,7 @@ const Panel = () => {
         console.log('default')
     }
   }
-  if (!isAuth) {
-    navigate('../login', { replace: true })
-  }
+
   return (
     <Layout>
       <Header

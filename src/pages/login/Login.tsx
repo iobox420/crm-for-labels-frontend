@@ -10,14 +10,19 @@ import { login } from '@/redux/authSlice'
 const Login: React.FC = () => {
   const navigate = useNavigate()
   // @ts-ignore
-  const isAuth = useSelector(({ auth }) => {
-    return auth.isAuth
+  const auth = useSelector(state => {
+    // @ts-ignore
+    return state.auth
   })
   useEffect(() => {
-    if (isAuth) {
-      navigate('/panel', { replace: true })
+    if (auth.isAuth) {
+      if (auth.user.role === 'artist') {
+        navigate('/panel', { replace: true })
+      } else if (auth.user.role === 'admin') {
+        navigate('/admin-panel', { replace: true })
+      }
     }
-  }, [isAuth, navigate])
+  }, [auth, navigate])
   const dispatch = useDispatch()
   const onFinish = (values: { username: string; password: string }) => {
     console.log('Received values of form: ', values)
