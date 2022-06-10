@@ -13,6 +13,8 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { extractAuthData } from '@/redux/authSlice'
 import Artists from '@/pages/artists/Artists'
+import ArtistContainer from "@/pages/artists-rtk-query/ArtistContainer";
+import ArtistsTable from "@/pages/artists/Artists";
 
 function App() {
   const dispatch = useDispatch()
@@ -84,6 +86,14 @@ function App() {
             element={
               <RequireAdmin>
                 <Artists />
+              </RequireAdmin>
+            }
+          />
+          <Route
+            path="artists-rtk"
+            element={
+              <RequireAdmin>
+                <ArtistContainer />
               </RequireAdmin>
             }
           />

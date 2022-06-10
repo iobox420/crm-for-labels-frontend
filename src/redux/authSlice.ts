@@ -69,6 +69,16 @@ export const checkAuth = createAsyncThunk('auth/checkAuth', async (arg: void, { 
   }
 })
 
+export interface IAuth {
+  user: {
+    email: string
+    id_user: string
+    role: string
+  }
+  isAuth: false
+  isLoading: false
+}
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {

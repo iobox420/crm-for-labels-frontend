@@ -19,6 +19,10 @@ const items: MenuProps['items'] = [
             label: 'All artists',
             key: 'key-all-artists',
           },
+          {
+            label: 'All artists rtk-query',
+            key: 'key-all-artists-rtk-query',
+          },
         ],
       },
       {
@@ -44,6 +48,9 @@ const AdminPanel = () => {
     switch (e.key) {
       case 'key-all-artists':
         navigate('artists')
+        break
+      case 'key-all-artists-rtk-query':
+        navigate('artists-rtk')
         break
 
       case 'key-exit':

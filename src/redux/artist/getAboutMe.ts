@@ -1,6 +1,6 @@
-import { setArtists } from '@/redux/adminSlice'
+import { setArtists } from '@/redux/admin/adminSlice'
 import ArtistService from '@/services/ArtistService'
-import { setAboutMe } from '@/redux/artistSlice'
+import { setAboutMe } from '@/redux/artist/artistSlice'
 
 export const getAboutMe = () => {
   // @ts-ignore

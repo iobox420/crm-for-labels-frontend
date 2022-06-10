@@ -14,7 +14,7 @@ module.exports = {
     sourceType: 'module',
     ecmaVersion: 6,
   },
-  plugins: ['react', 'standard', '@typescript-eslint'],
+  plugins: ['react', 'standard', '@typescript-eslint', 'react-hooks'],
   settings: {
     'import/resolver': {
       node: {
@@ -52,5 +52,8 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 0,
 
     'no-empty-pattern': 0,
+
+    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
   },
 }

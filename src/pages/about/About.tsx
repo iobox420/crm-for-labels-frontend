@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAboutMe } from '@/redux/getAboutMe'
+import { getAboutMe } from '@/redux/artist/getAboutMe'
 const About = () => {
   const artist = useSelector(state => {
     // @ts-ignore

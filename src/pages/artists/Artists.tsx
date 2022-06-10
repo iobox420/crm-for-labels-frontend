@@ -1,57 +1,64 @@
-// @ts-nocheck
 import React, { useEffect, useState } from 'react'
-import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd'
-import { getArtists } from '@/redux/getArtists'
-import { useDispatch, useSelector } from 'react-redux'
+import { Button, Form, Popconfirm, Table, Typography } from 'antd'
+import { getArtists } from '@/redux/admin/getArtists'
+import {deleteRow} from '@/redux/admin/adminSlice'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+import EditableCell from '@/pages/artists/EditableCell'
+import { IArtist } from '@/models/IArtist'
+import getCols from './getCols'
+import { updateArtist } from "@/redux/admin/updateArtist";
 
-const EditableCell = ({
-  editing,
-  dataIndex,
-  title,
-  inputType,
-  record,
-  index,
-  children,
-  ...restProps
-}) => {
-  const inputNode = inputType === 'number' ? <InputNumber /> : <Input />
+const Artists = () => {
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(getArtists())
+  }, [dispatch])
+
+  const admin = useAppSelector(state => state.admin)
+  let artists = useAppSelector(state => state.admin.artists)
+  if (admin.isLoadingArtists) {
+    return <>Loading</>
+  }
+  const deleteRowHandle = () => {
+    // @ts-ignore
+    dispatch(deleteRow());
+  }
   return (
-    <td {...restProps}>
-      {editing ? (
-        <Form.Item
-          name={dataIndex}
-          style={{
-            margin: 0,
-          }}
-          rules={[
-            {
-              required: true,
-              message: `Please Input ${title}!`,
-            },
-          ]}
-        >
-          {inputNode}
-        </Form.Item>
-      ) : (
-        children
-      )}
-    </td>
+    <div>
+      <ArtistsTable artists={artists} />
+      <div>
+        <Button type="primary" onClick={deleteRowHandle}>удалить строку</Button>
+      </div>
+    </div>
   )
 }
+export default Artists
 
-const ArtistsTable = ({ artists }) => {
+
+// @ts-ignore
+const ArtistsTable = ({artists}) => {
+  const dispatch = useAppDispatch()
+  console.log('artist table component');
+  artists = artists.map((ar:IArtist, i:number) => {
+    return {
+      key: String(i),
+      ...ar,
+    }
+  })
+
   console.log('art', artists)
   const [form] = Form.useForm()
-  const [data, setData] = useState(artists)
+/*  const [artists, setArtists] = useState(artists)*/
   const [editingKey, setEditingKey] = useState('')
 
+  // @ts-ignore
   const isEditing = record => record.key === editingKey
 
+  // @ts-ignore
   const edit = record => {
+
     form.setFieldsValue({
-      name: '',
-      age: '',
-      address: '',
       ...record,
     })
     setEditingKey(record.key)
@@ -61,20 +68,28 @@ const ArtistsTable = ({ artists }) => {
     setEditingKey('')
   }
 
+  // @ts-ignore
   const save = async key => {
     try {
       const row = await form.validateFields()
-      const newData = [...data]
+
+      console.log('dp new row', row);
+      // @ts-ignore
+      dispatch(updateArtist(row));
+
+      const newData = [...artists]
+      // @ts-ignore
       const index = newData.findIndex(item => key === item.key)
 
       if (index > -1) {
-        const item = newData[index]
-        newData.splice(index, 1, { ...item, ...row })
-        setData(newData)
+/*        const item = newData[index]
+        newData.splice(index, 1, { ...item, ...row })*/
+
+        /*setArtists(newData)*/
         setEditingKey('')
       } else {
-        newData.push(row)
-        setData(newData)
+       /* newData.push(row)*/
+        /*setArtists(newData)*/
         setEditingKey('')
       }
     } catch (errInfo) {
@@ -82,47 +97,17 @@ const ArtistsTable = ({ artists }) => {
     }
   }
 
+  const cols2 = getCols(artists[0])
+
+  // @ts-ignore
   const columns = [
-    {
-      title: 'name_2',
-      dataIndex: 'name_2',
-      width: '15%',
-      editable: true,
-    },
-    {
-      title: 'name_1',
-      dataIndex: 'name_1',
-      width: '15%',
-      editable: true,
-    },
-    {
-      title: 'name_3',
-      dataIndex: 'name_3',
-      width: '15%',
-      editable: true,
-    },
-    {
-      title: 'email',
-      dataIndex: 'email',
-      width: '15%',
-      editable: true,
-    },
-    {
-      title: 'document',
-      dataIndex: 'document',
-      width: '15%',
-      editable: true,
-    },
-    {
-      title: 'creative_pseudonym',
-      dataIndex: 'creative_pseudonym',
-      width: '15%',
-      editable: true,
-    },
+    // @ts-ignore
+    ...cols2,
+
     {
       title: 'operation',
       dataIndex: 'operation',
-      render: (_, record) => {
+      render: (_: any, record: any) => {
         const editable = isEditing(record)
         return editable ? (
           <span>
@@ -139,30 +124,35 @@ const ArtistsTable = ({ artists }) => {
             </Popconfirm>
           </span>
         ) : (
-          <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
+          <Typography.Link disabled={editingKey !== ''} onClick={() => {
+            edit(record)
+          }}>
             Edit
           </Typography.Link>
         )
       },
     },
   ]
+  console.log(columns);
   const mergedColumns = columns.map(col => {
+    // @ts-ignore
     if (!col.editable) {
       return col
     }
 
-    // noinspection JSUnusedGlobalSymbols
     return {
       ...col,
+      // @ts-ignore
       onCell: record => ({
         record,
         inputType: col.dataIndex === 'age' ? 'number' : 'text',
         dataIndex: col.dataIndex,
-        title: col.title,
-        editing: isEditing(record),
+        // title: col.title,
+        editing: isEditing(record),// record => record.key === editingKey
       }),
     }
   })
+
 
   return (
     <Form form={form} component={false}>
@@ -173,35 +163,16 @@ const ArtistsTable = ({ artists }) => {
           },
         }}
         bordered
-        dataSource={data}
+        dataSource={artists}
+        // @ts-ignore
         columns={mergedColumns}
         rowClassName="editable-row"
         pagination={{
           onChange: cancel,
+          pageSize: 25
         }}
       />
     </Form>
   )
 }
 
-const Artists = () => {
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getArtists())
-  }, [dispatch])
-
-  const admin = useSelector(state => state.admin)
-  let artists = useSelector(state => state.admin.artists)
-  artists = artists.map((ar, i) => {
-    return {
-      key: String(i),
-      ...ar,
-    }
-  })
-  if (!admin.isLoadingArtists) {
-    return <>Loading</>
-  }
-  return <ArtistsTable artists={artists} />
-}
-
-export default Artists

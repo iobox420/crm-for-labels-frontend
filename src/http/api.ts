@@ -1,6 +1,9 @@
 import axios from 'axios'
 import { AuthResponse } from '@/models/response/AuthResponse'
 import config from '../config'
+import { IUser } from "@/models/IUser";
+import { setAuth, setUser } from "@/redux/authSlice";
+import store from '@/redux/store'
 const $api = axios.create({
   withCredentials: true,
   baseURL: config.API_URL,
@@ -26,7 +29,11 @@ $api.interceptors.response.use(
         localStorage.setItem('token', response.data.accessToken)
         return $api.request(originalRequest)
       } catch (e) {
-        console.log('НЕ АВТОРИЗОВАН')
+          localStorage.removeItem('isAuth')
+        localStorage.removeItem('token')
+
+
+
       }
     }
     throw error
