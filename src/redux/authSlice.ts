@@ -96,7 +96,12 @@ const authSlice = createSlice({
       if (action.payload) {
         localStorage.setItem('isAuth', 'true')
       } else {
-        localStorage.setItem('isAuth', 'false')
+        state.user = {}
+
+        localStorage.removeItem('isAuth')
+        localStorage.removeItem('email')
+        localStorage.removeItem('id_user')
+        localStorage.removeItem('role')
       }
     },
 

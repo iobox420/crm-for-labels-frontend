@@ -12,8 +12,11 @@ export const getArtists = createAsyncThunk(
       return fulfillWithValue(response.data)
       /*return response.data*/
     } catch (e: any) {
-      dispatch(setAuth(false))
-      dispatch(setUser({} as IUser))
+      if(e.response.status === 401){
+        dispatch(setAuth(false))
+/*        dispatch(setUser({} as IUser))*/
+      }
+
       return rejectWithValue('Не удалось загрузить список артистов')
     }
   },
