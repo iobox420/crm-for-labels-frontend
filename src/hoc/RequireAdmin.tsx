@@ -14,6 +14,9 @@ const RequireAdmin = ({ children }: any) => {
   if (auth.user.role === 'artist') {
     return <Navigate to={'/panel'} state={{ from: location }} />
   }
+  if (auth.user.role === 'admin_not_activated') {
+    return <Navigate to={'/your-account-not-activated'} state={{ from: location }} />
+  }
   if (auth.user.role === 'admin') {
     return children
   }

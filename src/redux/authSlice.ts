@@ -12,6 +12,10 @@ interface IAuthData {
   password: string
 }
 
+ export interface ISignUpData extends IAuthData {
+  isArtist:boolean
+}
+
 export const login = createAsyncThunk(
   'auth/login',
   async ({ email, password }: IAuthData, { dispatch }) => {
@@ -30,9 +34,9 @@ export const login = createAsyncThunk(
 )
 export const signup = createAsyncThunk(
   'auth/signup',
-  async ({ email, password }: IAuthData, { dispatch }) => {
+  async (newUser: ISignUpData, { dispatch }) => {
     try {
-      const response = await AuthService.signup(email, password)
+      const response = await AuthService.signup(newUser)
       console.log(response)
       localStorage.setItem('token', response.data.accessToken)
       dispatch(setAuth(true))

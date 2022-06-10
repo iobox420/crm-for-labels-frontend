@@ -13,8 +13,10 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { extractAuthData } from '@/redux/authSlice'
 import Artists from '@/pages/artists/Artists'
-import ArtistContainer from "@/pages/artists-rtk-query/ArtistContainer";
-import ArtistsTable from "@/pages/artists/Artists";
+import ArtistContainer from '@/pages/artists-rtk-query/ArtistContainer'
+import ArtistsTable from '@/pages/artists/Artists'
+import NotActivated from '@/pages/not-activated/NotActivated'
+import RequireNotActivated from '@/hoc/RequireNotActivated'
 
 function App() {
   const dispatch = useDispatch()
@@ -101,6 +103,15 @@ function App() {
         <Route path="/" element={<Redirect />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Registration />} />
+        <Route
+          path="/your-account-not-activated"
+          element={
+       /*     <RequireNotActivated>
+              <NotActivated />
+            </RequireNotActivated>*/
+            <NotActivated />
+          }
+        />
         <Route path="*" element={<Redirect />} />
       </Routes>
     </div>

@@ -20,6 +20,8 @@ const Login: React.FC = () => {
         navigate('/panel', { replace: true })
       } else if (auth.user.role === 'admin') {
         navigate('/admin-panel', { replace: true })
+      } else if (auth.user.role === 'admin_not_activated') {
+        navigate('/your-account-not-activated', { replace: true })
       }
     }
   }, [auth, navigate])

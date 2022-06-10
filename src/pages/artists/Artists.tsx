@@ -7,6 +7,8 @@ import EditableCell from '@/pages/artists/EditableCell'
 import { IArtist } from '@/models/IArtist'
 import getCols from './getCols'
 import { updateArtist } from "@/redux/admin/updateArtist";
+import { addRow } from '@/redux/admin/adminSlice'
+import { addArtist } from "@/redux/admin/addArtist";
 
 const Artists = () => {
   const dispatch = useAppDispatch()
@@ -24,11 +26,17 @@ const Artists = () => {
     // @ts-ignore
     dispatch(deleteRow());
   }
+
+  const addArtistRowHandle = () => {
+    // @ts-ignore
+    dispatch(addRow());
+  }
   return (
     <div>
       <ArtistsTable artists={artists} />
       <div>
         <Button type="primary" onClick={deleteRowHandle}>удалить строку</Button>
+        <Button type="primary" onClick={addArtistRowHandle}>Добавить артиста</Button>
       </div>
     </div>
   )
@@ -72,30 +80,20 @@ const ArtistsTable = ({artists}) => {
   const save = async key => {
     try {
       const row = await form.validateFields()
-
       console.log('dp new row', row);
+      if (row.id_artist_contract === 0){
+        // @ts-ignore
+        dispatch(addArtist(row));
+      }
       // @ts-ignore
       dispatch(updateArtist(row));
+      setEditingKey('')
 
-      const newData = [...artists]
-      // @ts-ignore
-      const index = newData.findIndex(item => key === item.key)
-
-      if (index > -1) {
-/*        const item = newData[index]
-        newData.splice(index, 1, { ...item, ...row })*/
-
-        /*setArtists(newData)*/
-        setEditingKey('')
-      } else {
-       /* newData.push(row)*/
-        /*setArtists(newData)*/
-        setEditingKey('')
-      }
     } catch (errInfo) {
       console.log('Validate Failed:', errInfo)
     }
   }
+
 
   const cols2 = getCols(artists[0])
 

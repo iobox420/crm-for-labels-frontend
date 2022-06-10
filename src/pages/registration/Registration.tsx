@@ -100,6 +100,7 @@ const Registration = () => {
       signup({
         email: values.email,
         password: values.password,
+        isArtist:values.isArtist,
       }),
     )
   }
@@ -154,6 +155,7 @@ const Registration = () => {
         initialValues={{
           residence: ['zhejiang', 'hangzhou', 'xihu'],
           prefix: '86',
+          isArtist:true
         }}
         scrollToFirstError
       >
@@ -211,7 +213,9 @@ const Registration = () => {
         >
           <Input.Password />
         </Form.Item>
-
+        <Form.Item name="isArtist" valuePropName="checked" >
+          <Checkbox  >I am artist</Checkbox>
+        </Form.Item>
         {/*<Form.Item
         name="nickname"
         label="Nickname"

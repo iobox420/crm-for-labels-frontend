@@ -2,6 +2,7 @@ import { IArtist } from '@/models/IArtist'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { getArtists } from '@/redux/admin/getArtists'
 import { updateArtist } from '@/redux/admin/updateArtist'
+import { addArtist } from './addArtist'
 
 interface AdminState {
   artists: IArtist[]
@@ -26,6 +27,30 @@ const adminSlice = createSlice({
     deleteRow(state) {
       state.artists = state.artists.slice(0, -1)
     },
+    addRow(state){
+     state.artists = [
+        ...state.artists,
+        { id_artist_contract: 0,
+          fk_id_user: 0,
+          creative_pseudonym: '',
+          name_2: '',
+          name_1: '',
+          name_3: '',
+          document: '',
+          address: '',
+          email: '',
+          inn: '',
+          snils: '',
+          bank_details: '',
+          contract_number: '',
+          contract_agreement: '',
+          contract_fee: '',
+          contract_fee_in_words: '',
+          contract_expiration_date: '',
+          deleted: false,
+        }
+      ]
+    }
   },
   extraReducers: {
     [getArtists.fulfilled.type]: (state, action: PayloadAction<IArtist[]>) => {
@@ -50,9 +75,15 @@ const adminSlice = createSlice({
       state.artists[index] = action.payload
       console.log(' [updateArtist.fulfilled.type]')
     },
+    [addArtist.fulfilled.type]:(state,action:PayloadAction<IArtist>) => {
+      state.artists = {
+        ...state.artists,
+        ...action.payload
+      }
+    }
   },
 })
 
 export default adminSlice.reducer
 
-export const { setArtists, deleteRow } = adminSlice.actions
+export const { setArtists, deleteRow,addRow } = adminSlice.actions

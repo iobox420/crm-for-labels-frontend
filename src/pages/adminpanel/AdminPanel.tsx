@@ -41,7 +41,7 @@ const AdminPanel = () => {
   })
   const [current, setCurrent] = useState('mail')
   let url = useLocation().pathname
-  let navigate = useNavigate()
+  const navigate = useNavigate()
   const onClick: MenuProps['onClick'] = e => {
     setCurrent(e.key)
     console.log('click ', e)
