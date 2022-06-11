@@ -3,3 +3,8 @@ export interface IUser {
   id_user: string
   role: string
 }
+
+export interface IUserFull extends IUser {
+  created_at: string
+  deleted: boolean
+}

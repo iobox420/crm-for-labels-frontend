@@ -17,6 +17,7 @@ import ArtistContainer from '@/pages/artists-rtk-query/ArtistContainer'
 import ArtistsTable from '@/pages/artists/Artists'
 import NotActivated from '@/pages/not-activated/NotActivated'
 import RequireNotActivated from '@/hoc/RequireNotActivated'
+import Users from "@/pages/users/Users";
 
 function App() {
   const dispatch = useDispatch()
@@ -88,6 +89,14 @@ function App() {
             element={
               <RequireAdmin>
                 <Artists />
+              </RequireAdmin>
+            }
+          />
+          <Route
+            path="users"
+            element={
+              <RequireAdmin>
+                <Users />
               </RequireAdmin>
             }
           />
