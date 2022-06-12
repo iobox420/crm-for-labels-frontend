@@ -8,7 +8,7 @@ export const updateArtist = createAsyncThunk('admin/updateArtist', async (row, {
     const response = await AdminService.updateArtist(row)
     console.log('Данные артиста успешно обновлены')
     return row
-  } catch (e: any) {  
+  } catch (e: any) {
     rejectWithValue('Не удалось обновить данные артиста')
   }
 })

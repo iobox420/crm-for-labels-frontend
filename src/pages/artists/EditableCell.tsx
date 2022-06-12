@@ -1,8 +1,8 @@
-// @ts-nocheck
 import { Form, Input, InputNumber } from "antd";
 import React from "react";
+import { IEditableCell } from "@/components/EditableCell";
 
-const EditableCell = ({
+const EditableCell: React.FC<IEditableCell>  = ({
                         editing,
                         dataIndex,
                         title,

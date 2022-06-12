@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import AuthService from '@/services/AuthService'
 import { IUser } from '@/models/IUser'
@@ -48,10 +46,10 @@ export const signup = createAsyncThunk(
 )
 export const logout = createAsyncThunk('auth/logout', async (arg: void, { dispatch }) => {
   try {
-    await AuthService.logout()
     localStorage.removeItem('token')
     dispatch(setAuth(false))
     dispatch(setUser({} as IUser))
+    await AuthService.logout()
   } catch (e: any) {
     console.log(e.response?.data?.message)
   }
@@ -73,12 +71,9 @@ export const checkAuth = createAsyncThunk('auth/checkAuth', async (arg: void, { 
   }
 })
 
+
 export interface IAuth {
-  user: {
-    email: string
-    id_user: string
-    role: string
-  }
+  user: IUser
   isAuth: false
   isLoading: false
 }
@@ -87,9 +82,9 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: {
     user: {
-      email: 'string',
-      id_user: 'string',
-      role: 'string',
+      email: null,
+      id_user: null,
+      role: null,
     } as IUser,
     isAuth: false,
     isLoading: false,
@@ -100,7 +95,11 @@ const authSlice = createSlice({
       if (action.payload) {
         localStorage.setItem('isAuth', 'true')
       } else {
-        state.user = {}
+        state.user = {
+          email: '',
+          id_user: '',
+          role: '',
+        }
 
         localStorage.removeItem('isAuth')
         localStorage.removeItem('email')
@@ -124,11 +123,7 @@ const authSlice = createSlice({
     extractAuthData(state) {
       const isAuth = localStorage.getItem('isAuth')
       if (isAuth) {
-        if (isAuth === 'true') {
-          state.isAuth = true
-        } else {
-          state.isAuth = false
-        }
+        state.isAuth = isAuth === 'true';
         state.user.email = localStorage.getItem('email')
         state.user.id_user = localStorage.getItem('id_user')
         state.user.role = localStorage.getItem('role')

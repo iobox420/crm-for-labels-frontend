@@ -27,6 +27,14 @@ const items: MenuProps['items'] = [
             label: 'All artists rtk-query',
             key: 'key-all-artists-rtk-query',
           },
+/*          {
+            label: 'test',
+            key: 'key-test',
+          },
+          {
+            label: 'test2',
+            key: 'key-test2',
+          },*/
         ],
       },
       {
@@ -59,6 +67,12 @@ const AdminPanel = () => {
       case 'key-all-users':
         navigate('users')
         break
+/*      case 'key-test':
+        navigate('test')
+        break
+      case 'key-test2':
+        navigate('test2')
+        break*/
       case 'key-exit':
         // @ts-ignore
         dispatch(logout())

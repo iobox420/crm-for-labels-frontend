@@ -1,10 +1,14 @@
 export interface IUser {
-  email: string
-  id_user: string
-  role: string
+  email: string | null
+  id_user: string | null
+  role: string | null
 }
 
 export interface IUserFull extends IUser {
   created_at: string
   deleted: boolean
+}
+
+export interface IUserWithKey extends IUserFull {
+  key: number
 }

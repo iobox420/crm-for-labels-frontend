@@ -1,9 +1,8 @@
-// @ts-nocheck
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Layout, Menu, MenuProps } from 'antd'
 import { FileTextOutlined, UnorderedListOutlined, UserOutlined } from '@ant-design/icons'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { logout } from '@/redux/authSlice'
 
 const items: MenuProps['items'] = [
@@ -105,7 +104,9 @@ const Panel = () => {
   }
 
   return (
-    <Layout>
+    <Layout style={{
+      height: '100vh',
+    }}>
       <Header
         style={{
           position: 'fixed',

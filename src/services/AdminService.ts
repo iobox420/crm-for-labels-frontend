@@ -2,6 +2,7 @@ import $api from '../http/api'
 import { AxiosResponse } from 'axios'
 import { AuthResponse } from '@/models/response/AuthResponse'
 import { IArtist } from '@/models/IArtist'
+import {  IUserFull } from "@/models/IUser";
 
 export default class AdminService {
   // artists
@@ -17,5 +18,8 @@ export default class AdminService {
   // users
   static async getUsers(): Promise<AxiosResponse<AuthResponse>> {
     return $api.get<AuthResponse>('/admin/get-users', {})
+  }
+  static async updateUser(user:IUserFull): Promise<AxiosResponse<AuthResponse>> {
+    return $api.put<AuthResponse>('/admin/put-user', {...user})
   }
 }

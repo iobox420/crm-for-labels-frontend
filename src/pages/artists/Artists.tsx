@@ -1,141 +1,250 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Form, Popconfirm, Table, Typography } from 'antd'
-import { getArtists } from '@/redux/admin/getArtists'
-import {deleteRow} from '@/redux/admin/adminSlice'
+import React, { useCallback, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import EditableCell from '@/pages/artists/EditableCell'
-import { IArtist } from '@/models/IArtist'
-import getCols from './getCols'
+import { getUsers } from '@/redux/admin/getUsers'
+import { Form, Table } from 'antd'
+import moment from 'moment'
+import { updateUser } from '@/redux/admin/updateUser'
+import EditableCell from '@/components/EditableCell'
+import { setEditingKey } from '@/redux/admin/adminSlice'
+import { getArtists } from "@/redux/admin/getArtists";
 import { updateArtist } from "@/redux/admin/updateArtist";
-import { addRow } from '@/redux/admin/adminSlice'
-import { addArtist } from "@/redux/admin/addArtist";
 
 const Artists = () => {
   const dispatch = useAppDispatch()
   useEffect(() => {
     // @ts-ignore
     dispatch(getArtists())
+    return () => {
+      dispatch(setEditingKey(''))
+    }
   }, [dispatch])
-
+  //key	id_user	email	password	role	created_at	deleted	operation
   const admin = useAppSelector(state => state.admin)
   let artists = useAppSelector(state => state.admin.artists)
-  if (admin.isLoadingArtists) {
-    return <>Loading</>
-  }
-  const deleteRowHandle = () => {
-    // @ts-ignore
-    dispatch(deleteRow());
-  }
 
-  const addArtistRowHandle = () => {
-    // @ts-ignore
-    dispatch(addRow());
-  }
-  return (
-    <div>
-      <ArtistsTable artists={artists} />
-      <div>
-        <Button type="primary" onClick={deleteRowHandle}>удалить строку</Button>
-        <Button type="primary" onClick={addArtistRowHandle}>Добавить артиста</Button>
-      </div>
-    </div>
-  )
-}
-export default Artists
-
-
-// @ts-ignore
-const ArtistsTable = ({artists}) => {
-  const dispatch = useAppDispatch()
-  console.log('artist table component');
-  artists = artists.map((ar:IArtist, i:number) => {
+  artists = artists.map((user, i) => {
     return {
-      key: String(i),
-      ...ar,
+      ...user,
+      key: i,
+      contract_agreement: moment(user.contract_agreement),
+      contract_expiration_date: moment(user.contract_expiration_date),
+      deleted: JSON.stringify(user.deleted),
     }
-  })
+  }) as any
+  console.log('artists', artists);
 
-  console.log('art', artists)
   const [form] = Form.useForm()
-/*  const [artists, setArtists] = useState(artists)*/
-  const [editingKey, setEditingKey] = useState('')
-
+  const editingKey = admin.editingKey
   // @ts-ignore
   const isEditing = record => record.key === editingKey
-
   // @ts-ignore
-  const edit = record => {
 
+  const edit = useCallback(record => {
     form.setFieldsValue({
       ...record,
     })
-    setEditingKey(record.key)
-  }
+    dispatch(setEditingKey(record.key))
+  },[form,dispatch])
 
-  const cancel = () => {
-    setEditingKey('')
-  }
+
+  const cancel = useCallback(() => {
+    dispatch(setEditingKey(''))
+  },[dispatch])
 
   // @ts-ignore
-  const save = async key => {
+  const save = useCallback(async () => {
     try {
-      const row = await form.validateFields()
-      console.log('dp new row', row);
-      if (row.id_artist_contract === 0){
-        // @ts-ignore
-        dispatch(addArtist(row));
+      const artist = await form.validateFields()
+      const userCastedToTypes = {
+        ...artist,
+        contract_agreement: artist.contract_agreement.format('YYYY-MM-DD'),
+        contract_expiration_date: artist.contract_expiration_date.format('YYYY-MM-DD'),
+        deleted:artist.deleted
       }
       // @ts-ignore
-      dispatch(updateArtist(row));
-      setEditingKey('')
-
+      dispatch(updateArtist(userCastedToTypes))
+      console.log('dp new artist', artist)
     } catch (errInfo) {
       console.log('Validate Failed:', errInfo)
     }
-  }
-
-
-  const cols2 = getCols(artists[0])
-
-  // @ts-ignore
+  },[form, dispatch])
+/*
+ key	id_artist_contract	fk_id_user	creative_pseudonym	name_2	name_1
+ name_3	document	address	email	inn	snils	bank_details
+ contract_number	contract_agreement	contract_fee	contract_fee_in_words
+ contract_expiration_date	deleted	operation
+*/
   const columns = [
-    // @ts-ignore
-    ...cols2,
+    {
+      title: 'id_artist_contract',
+      dataIndex: 'id_artist_contract',
+      key: 'id_artist_contract',
+      dataType: 'text',
+      editable: false,
+    },
+    {
+      title: 'fk_id_user',
+      dataIndex: 'fk_id_user',
+      key: 'fk_id_user',
+      dataType: 'text',
+      editable: false,
+    },
+    {
+      title: 'creative_pseudonym',
+      dataIndex: 'creative_pseudonym',
+      key: 'creative_pseudonym',
+      dataType: 'text',
+      editable: true,
+    },
+    {
+      title: 'name_2',
+      dataIndex: 'name_2',
+      key: 'name_2',
+      dataType: 'text',
+      editable: true,
+    },
+    {
+      title: 'name_1',
+      dataIndex: 'name_1',
+      key: 'name_1',
+      dataType: 'text',
+      editable: true,
+    },
+    {
+      title: 'name_3',
+      dataIndex: 'name_3',
+      key: 'name_3',
+      dataType: 'text',
+      editable: true,
+    },
+    {
+      title: 'document',
+      dataIndex: 'document',
+      key: 'document',
+      dataType: 'text',
+      editable: true,
+    },
+    {
+      title: 'address',
+      dataIndex: 'address',
+      key: 'address',
+      dataType: 'text',
+      editable: true,
+    },
 
+    {
+      title: 'email',
+      dataIndex: 'email',
+      key: 'email',
+      dataType: 'text',
+      editable: true,
+    },
+    {
+      title: 'inn',
+      dataIndex: 'inn',
+      key: 'inn',
+      dataType: 'text',
+      editable: true,
+    },
+    {
+      title: 'snils',
+      dataIndex: 'snils',
+      key: 'snils',
+      dataType: 'text',
+      editable: true,
+    },
+    {
+      title: 'bank_details',
+      dataIndex: 'bank_details',
+      key: 'bank_details',
+      dataType: 'text',
+      editable: true,
+
+    },
+    {
+      title: 'contract_number',
+      dataIndex: 'contract_number',
+      key: 'contract_number',
+      dataType: 'text',
+      editable: true,
+    },
+    {
+      title: 'contract_agreement',
+      dataIndex: 'contract_agreement',
+      key: 'contract_agreement',
+      dataType: 'date',
+      editable: true,
+    },
+    {
+      title: 'contract_fee',
+      dataIndex: 'contract_fee',
+      key: 'contract_fee',
+      dataType: 'text',
+      editable: true,
+    },
+    {
+      title: 'contract_fee_in_words',
+      dataIndex: 'contract_fee_in_words',
+      key: 'contract_fee_in_words',
+      dataType: 'text',
+      editable: true,
+    },
+    {
+      title: 'contract_expiration_date',
+      dataIndex: 'contract_expiration_date',
+      key: 'contract_expiration_date',
+      dataType: 'date',
+      editable: true,
+    },
+    {
+      title: 'deleted',
+      dataIndex: 'deleted',
+      key: 'deleted',
+      dataType: 'dropdown-deleted',
+      editable: true,
+    },
     {
       title: 'operation',
       dataIndex: 'operation',
-      render: (_: any, record: any) => {
-        const editable = isEditing(record)
-        return editable ? (
-          <span>
-            <Typography.Link
-              onClick={() => save(record.key)}
-              style={{
-                marginRight: 8,
-              }}
-            >
-              Save
-            </Typography.Link>
-            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-              <a>Cancel</a>
-            </Popconfirm>
-          </span>
-        ) : (
-          <Typography.Link disabled={editingKey !== ''} onClick={() => {
-            edit(record)
-          }}>
-            Edit
-          </Typography.Link>
-        )
-      },
+      key: 'operation',
+      dataType: 'operation',
     },
   ]
-  console.log(columns);
-  const mergedColumns = columns.map(col => {
+  // добавляем новые пропсы для того что бы ими воспользоваться когда будем отрендерить ячейку с помощью компонента Editable cell
+  const columnsWithNewProps = columns.map(col => {
+    if (col.dataType === 'operation') {
+      return {
+        ...col,
+        // @ts-ignore
+        // вот эта функция вызывается при каждом рендеринг ячейки скорее всего
+        onCell: record => {
+          return {
+            record,
+            dataType: col.dataType,
+            dataIndex: col.dataIndex,
+            title: col.title,
+            save: save,
+            edit: edit,
+            cancel: cancel,
+            isEditing: isEditing,
+            editingKey: editingKey,
+          }
+        },
+      }
+    }
     // @ts-ignore
-    if (!col.editable) {
-      return col
+    if (col.editable) {
+      return {
+        ...col,
+        // @ts-ignore
+        onCell: record => ({
+          record,
+          dataType: col.dataType,
+          dataIndex: col.dataIndex,
+          title: col.title,
+          editing: isEditing(record), // record => record.key === editingKey
+        }),
+      }
     }
 
     return {
@@ -143,34 +252,39 @@ const ArtistsTable = ({artists}) => {
       // @ts-ignore
       onCell: record => ({
         record,
-        inputType: col.dataIndex === 'age' ? 'number' : 'text',
+        dataType: col.dataType,
         dataIndex: col.dataIndex,
-        // title: col.title,
-        editing: isEditing(record),// record => record.key === editingKey
+        title: col.title,
       }),
     }
   })
 
-
+  console.log('artists', artists)
+  if (admin.isLoadingArtists) {
+    return <>Loading</>
+  }
+  console.log(admin)
+  if (admin.artistsError !== '') {
+    return <>ошибка</>
+  }
+  console.log('render table')
   return (
     <Form form={form} component={false}>
       <Table
+        dataSource={artists}
+        // производим замену стандартного компонента ячейка на компонент EditableCell
         components={{
           body: {
             cell: EditableCell,
           },
         }}
         bordered
-        dataSource={artists}
-        // @ts-ignore
-        columns={mergedColumns}
         rowClassName="editable-row"
-        pagination={{
-          onChange: cancel,
-          pageSize: 25
-        }}
+        columns={columnsWithNewProps}
       />
+      ;
     </Form>
   )
 }
 
+export default Artists
