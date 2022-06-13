@@ -1,6 +1,6 @@
 import $api from '../http/api'
 import { AxiosResponse } from 'axios'
-import { AuthResponse } from '../models/response/AuthResponse'
+import { AuthResponse } from "@/models/response/AuthResponse"
 import { ISignUpData } from "@/redux/authSlice";
 
 export default class AuthService {

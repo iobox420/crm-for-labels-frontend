@@ -1,4 +1,3 @@
-import { setArtists } from '@/redux/admin/adminSlice'
 import ArtistService from '@/services/ArtistService'
 import { setAboutMe } from '@/redux/artist/artistSlice'
 

@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react'
-import { Form, Input, Button, Checkbox, Typography } from 'antd'
+import { Button, Checkbox, Form, Input, Typography } from 'antd'
+import { LockOutlined, UserOutlined } from '@ant-design/icons'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { login } from '@/redux/authSlice'
+import { useAppSelector } from '@/hooks/redux'
 
 const { Title } = Typography
-import { UserOutlined, LockOutlined } from '@ant-design/icons'
-import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { login } from '@/redux/authSlice'
 
 const Login: React.FC = () => {
   const navigate = useNavigate()
-  // @ts-ignore
-  const auth = useSelector(state => {
-    // @ts-ignore
+  const auth = useAppSelector(state => {
     return state.auth
   })
   useEffect(() => {

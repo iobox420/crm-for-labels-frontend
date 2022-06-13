@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { getUsers } from '@/redux/admin/getUsers'
 import { Form, Table } from 'antd'
 import moment from 'moment'
-import { updateUser } from '@/redux/admin/updateUser'
 import EditableCell from '@/components/EditableCell'
 import { setEditingKey } from '@/redux/admin/adminSlice'
 import { getArtists } from "@/redux/admin/getArtists";

@@ -3,8 +3,8 @@ import { getAboutMe } from "@/redux/artist/getAboutMe";
 import { Card, Space, Typography } from "antd";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import Loading from "@/components/Loading";
-
 const { Title } = Typography;
+
 const About = () => {
   const dispatch = useAppDispatch()
   const artist = useAppSelector(state => {
@@ -12,9 +12,8 @@ const About = () => {
   })
   const about = artist.aboutMe
   useEffect(() => {
-    // @ts-ignore
     dispatch(getAboutMe())
-  }, [])
+  }, [dispatch])
 
   if (!artist.isLoadingAboutMe) {
     return <Loading />  }

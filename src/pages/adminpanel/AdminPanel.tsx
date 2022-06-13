@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Layout, Menu, MenuProps } from 'antd'
-import { FileTextOutlined, UnorderedListOutlined, UserOutlined } from '@ant-design/icons'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { UnorderedListOutlined} from '@ant-design/icons'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '@/redux/authSlice'
 
@@ -44,7 +44,7 @@ const items: MenuProps['items'] = [
     ],
   },
 ]
-const { Header, Footer, Content } = Layout
+const { Header,  Content } = Layout
 const AdminPanel = () => {
   const dispatch = useDispatch()
   // @ts-ignore
@@ -52,7 +52,6 @@ const AdminPanel = () => {
     return auth.isAuth
   })
   const [current, setCurrent] = useState('mail')
-  let url = useLocation().pathname
   const navigate = useNavigate()
   const onClick: MenuProps['onClick'] = e => {
     setCurrent(e.key)

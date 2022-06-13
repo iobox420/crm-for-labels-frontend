@@ -6,12 +6,8 @@ export const adminAPI = createApi({
   reducerPath: 'adminAPI',
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:5002/crm-api/admin',
-    prepareHeaders: (headers/*, { getState }*/) => {
-/*      const {
-        auth: {
-          user: { accessToken },
-        },
-      } = getState();*/
+    prepareHeaders: (headers) => {
+
       const accessToken = localStorage.getItem('token')
       if (accessToken) {
         headers.set('Authorization', `Bearer ${accessToken}`);
@@ -25,9 +21,6 @@ export const adminAPI = createApi({
       query: (limit: number = 5) => ({
         url: `/get-artists`,
         method:'GET'
-       /* params: {
-          _limit: limit
-        }*/
       }),
       providesTags: result => ['Post']
     }),

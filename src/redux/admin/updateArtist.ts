@@ -1,7 +1,7 @@
 import AdminService from '@/services/AdminService'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-export const updateArtist = createAsyncThunk('admin/updateArtist', async (row, { dispatch, rejectWithValue }) => {
+export const updateArtist = createAsyncThunk('admin/updateArtist', async (row, {  rejectWithValue }) => {
   try {
     console.log('update artist', row);
     // @ts-ignore
