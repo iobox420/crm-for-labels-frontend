@@ -1,10 +1,15 @@
-# Stack
-vite
-react-ts
-ant-design
-redux toolkit
-react-query
+# Как развернуть?
+Актуальная ветка iobox420
 
+```
+git checkout iobox420
+yarn install
+```
+после установки всех зависимостей
+```
+yarn dev
+```
+Первая прогрузка страницы может занять время
 #config
-src/config.ts 
-Лежит файл с конфигами.
+src/config.ts
+Лежит файл с конфигами, по умолчанию ничего править не надо.
