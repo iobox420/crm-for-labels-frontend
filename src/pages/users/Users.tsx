@@ -4,7 +4,7 @@ import { getUsers } from '@/redux/admin/getUsers'
 import { Form, Table } from 'antd'
 import moment from 'moment'
 import { updateUser } from '@/redux/admin/updateUser'
-import EditableCell from '@/components/EditableCell'
+import EditableCell, { TRecord } from "@/components/EditableCell";
 import { setEditingKey } from '@/redux/admin/adminSlice'
 
 const Users = () => {
@@ -111,7 +111,7 @@ const Users = () => {
       return {
         ...col,
         // вот эта функция вызывается при каждом рендеринг ячейки скорее всего
-        onCell: record => {
+        onCell: (record: TRecord) => {
           return {
             record,
             dataType: col.dataType,

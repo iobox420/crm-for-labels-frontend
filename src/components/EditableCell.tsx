@@ -3,7 +3,7 @@ import { Form, Input, InputNumber, Typography, Popconfirm, DatePicker, Select } 
 const { Option } = Select
 import React from 'react'
 
-type TRecord = any
+export type TRecord = any
 
 export interface IEditableCell {
   editing:boolean

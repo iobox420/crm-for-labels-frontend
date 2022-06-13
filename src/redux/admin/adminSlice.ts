@@ -104,6 +104,7 @@ const adminSlice = createSlice({
       }
     },
     [getUsers.fulfilled.type]: (state, action: PayloadAction<IUserFull[]>) => {
+      // noinspection UnnecessaryLocalVariableJS
       const users = action.payload.map(user => {
         return {
           ...user,

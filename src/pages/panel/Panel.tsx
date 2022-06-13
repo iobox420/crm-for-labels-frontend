@@ -72,7 +72,7 @@ const items: MenuProps['items'] = [
     ],
   },
 ]
-const { Header, Footer, Content } = Layout
+const { Header, Content } = Layout
 const Panel = () => {
   const dispatch = useDispatch()
   // @ts-ignore

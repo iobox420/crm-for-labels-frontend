@@ -14,7 +14,7 @@ const About = () => {
   useEffect(() => {
     // @ts-ignore
     dispatch(getAboutMe())
-  }, [])
+  }, [dispatch])
 
   if (!artist.isLoadingAboutMe) {
     return <Loading />  }

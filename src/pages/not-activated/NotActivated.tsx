@@ -1,8 +1,8 @@
 import React from 'react'
 import { logout } from '@/redux/authSlice'
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { useAppDispatch} from "@/hooks/redux";
 import { Button, Typography } from 'antd'
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const { Title } = Typography;
 
 const NotActivated = () => {
