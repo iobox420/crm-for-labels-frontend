@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import vitePluginImp from 'vite-plugin-imp'
-// @ts-ignore
+
 import path from 'path'
 
 // https://vitejs.dev/config/

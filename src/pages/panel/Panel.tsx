@@ -4,6 +4,7 @@ import { FileTextOutlined, UnorderedListOutlined, UserOutlined } from '@ant-desi
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { logout } from '@/redux/authSlice'
+import { useAppDispatch } from '@/hooks/redux'
 
 const items: MenuProps['items'] = [
   {
@@ -74,8 +75,8 @@ const items: MenuProps['items'] = [
 ]
 const { Header, Content } = Layout
 const Panel = () => {
-  const dispatch = useDispatch()
-  // @ts-ignore
+  const dispatch = useAppDispatch()
+
 
   const [current, setCurrent] = useState('mail')
   let url = useLocation().pathname
@@ -94,7 +95,7 @@ const Panel = () => {
         navigate('acts')
         break
       case 'key-exit':
-        // @ts-ignore
+
         dispatch(logout())
         console.log('exit')
         break

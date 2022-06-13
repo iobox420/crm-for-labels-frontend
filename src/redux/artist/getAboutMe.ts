@@ -2,6 +2,7 @@ import ArtistService from '@/services/ArtistService'
 import { setAboutMe } from '@/redux/artist/artistSlice'
 
 export const getAboutMe = () => {
+
   // @ts-ignore
   return async dispatch => {
     try {

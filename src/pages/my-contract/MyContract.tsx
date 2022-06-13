@@ -11,7 +11,7 @@ const MyContract = () => {
   })
   const about = artist.aboutMe
   useEffect(() => {
-    // @ts-ignore
+
     dispatch(getAboutMe())
   }, [dispatch])
 

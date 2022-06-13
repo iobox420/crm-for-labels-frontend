@@ -9,7 +9,7 @@ const NotActivated = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const handleLogout = () => {
-    // @ts-ignore
+
     dispatch(logout())
     setTimeout(() => {
       navigate('/login', { replace: true })

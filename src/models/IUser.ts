@@ -6,7 +6,7 @@ export interface IUser {
 
 export interface IUserFull extends IUser {
   created_at: string
-  deleted: boolean
+  deleted: string | boolean
 }
 
 export interface IUserWithKey extends IUserFull {

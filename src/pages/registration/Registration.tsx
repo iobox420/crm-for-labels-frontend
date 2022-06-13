@@ -2,20 +2,21 @@
 
 import React, { useEffect, useState } from 'react'
 import {
+  AutoComplete,
+  Button,
+  Cascader,
+  Checkbox,
+  Col,
   Form,
   Input,
   InputNumber,
-  Cascader,
-  Select,
   Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
+  Select,
 } from 'antd'
 import { login, signup } from '@/redux/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux'
 
 const { Option } = Select
 const residences = [
@@ -85,8 +86,8 @@ const tailFormItemLayout = {
 
 const Registration = () => {
   const navigate = useNavigate()
-  // @ts-ignore
-  const isAuth = useSelector(({ auth }) => {
+
+  const isAuth = useAppSelector(({ auth }) => {
     return auth.isAuth
   })
   useEffect(() => {
@@ -95,7 +96,7 @@ const Registration = () => {
     }
   }, [isAuth, navigate])
   const [form] = Form.useForm()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values)
     dispatch<any>(

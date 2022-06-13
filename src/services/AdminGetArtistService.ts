@@ -18,7 +18,7 @@ export const adminAPI = createApi({
   tagTypes: ['Post'],
   endpoints: (build) => ({
     fetchAllArtists: build.query<IArtist[], number>({
-      query: (limit: number = 5) => ({
+      query: () => ({
         url: `/get-artists`,
         method:'GET'
       }),

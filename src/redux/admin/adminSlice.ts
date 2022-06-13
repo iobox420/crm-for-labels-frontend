@@ -92,8 +92,8 @@ const adminSlice = createSlice({
       )
       state.artists[index] = {
         ...action.payload,
-        // @ts-ignore
-        deleted:JSON.parse(action.payload.deleted)
+
+        deleted:JSON.parse(action.payload.deleted as string)
       }
       console.log(' [updateArtist.fulfilled.type]')
     },
@@ -111,6 +111,7 @@ const adminSlice = createSlice({
           created_at: new Date(user.created_at),
         }
       })
+
       // @ts-ignore
       state.users = users
       state.usersError = ''
@@ -128,8 +129,8 @@ const adminSlice = createSlice({
 
       state.users[index] = {
         ...action.payload,
-        // @ts-ignore
-        deleted:JSON.parse(action.payload.deleted)
+
+        deleted:JSON.parse(action.payload.deleted as string)
       }
       console.log('[updateUser.fulfilled.type]')
     },

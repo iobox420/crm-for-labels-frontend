@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import { adminAPI } from '@/services/AdminGetArtistService'
 
 const ArtistContainer: FC = () => {
+
   // @ts-ignore
   const { data: artists, error, isLoading, refetch } = adminAPI.useFetchAllArtistsQuery()
   const [createArtist, {}] = adminAPI.useCreateArtistMutation()

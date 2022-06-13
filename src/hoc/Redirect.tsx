@@ -2,6 +2,7 @@ import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 import { useAppSelector } from '@/hooks/redux'
 
+// @ts-ignore
 const Redirect: React.FC = () => {
   console.log('redirect')
   const auth = useAppSelector(({ auth }) => {

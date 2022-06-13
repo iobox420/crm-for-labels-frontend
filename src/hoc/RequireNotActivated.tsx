@@ -2,6 +2,7 @@ import React from "react";
 import { useAppSelector } from "@/hooks/redux";
 import { Navigate } from "react-router-dom";
 
+
 // @ts-ignore
 const RequireNotActivated = ({ children}) => {
   const auth = useAppSelector(({ auth }) => {
