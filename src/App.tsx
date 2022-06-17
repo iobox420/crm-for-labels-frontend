@@ -13,10 +13,12 @@ import { extractAuthData } from '@/redux/authSlice'
 import ArtistContainer from '@/pages/artists-rtk-query/ArtistContainer'
 import NotActivated from '@/pages/not-activated/NotActivated'
 import Users from '@/pages/users/Users'
-import MyContract from '@/pages/my-contract/MyContract'
-import { useAppDispatch } from '@/hooks/redux'
 
+import { useAppDispatch } from '@/redux/hooks'
+import AboutReactQuery from '@/pages/about-react-query/AboutReactQuery'
 import Artists from "@/pages/artists/Artists";
+import MyContract from "@/pages/my-contract-react-query/MyContract";
+
 
 function App() {
   const dispatch = useAppDispatch()
@@ -40,7 +42,15 @@ function App() {
             index
             element={
               <RequireArtist>
-                <About />
+                <AboutReactQuery />
+              </RequireArtist>
+            }
+          />
+          <Route
+            path="key-about-me-react-query"
+            element={
+              <RequireArtist>
+                <AboutReactQuery />
               </RequireArtist>
             }
           />

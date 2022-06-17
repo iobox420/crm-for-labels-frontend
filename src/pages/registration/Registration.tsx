@@ -2,20 +2,21 @@
 
 import React, { useEffect, useState } from 'react'
 import {
+  AutoComplete,
+  Button,
+  Cascader,
+  Checkbox,
+  Col,
   Form,
   Input,
   InputNumber,
-  Cascader,
-  Select,
   Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
+  Select,
 } from 'antd'
 import { login, signup } from '@/redux/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { useAppSelector } from '@/redux/hooks'
 
 const { Option } = Select
 const residences = [
@@ -85,8 +86,8 @@ const tailFormItemLayout = {
 
 const Registration = () => {
   const navigate = useNavigate()
-  // @ts-ignore
-  const isAuth = useSelector(({ auth }) => {
+
+  const isAuth = useAppSelector(({ auth }) => {
     return auth.isAuth
   })
   useEffect(() => {

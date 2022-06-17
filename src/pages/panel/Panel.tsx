@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Layout, Menu, MenuProps } from 'antd'
 import { FileTextOutlined, UnorderedListOutlined, UserOutlined } from '@ant-design/icons'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import { logout } from '@/redux/authSlice'
+import { useAppDispatch } from '@/redux/hooks'
 
 const items: MenuProps['items'] = [
   {
@@ -66,6 +66,10 @@ const items: MenuProps['items'] = [
         key: 'key-about-me',
       },
       {
+        label: 'About me react query',
+        key: 'key-about-me-react-query',
+      },
+      {
         label: 'Exit',
         key: 'key-exit',
       },
@@ -74,8 +78,8 @@ const items: MenuProps['items'] = [
 ]
 const { Header, Content } = Layout
 const Panel = () => {
-  const dispatch = useDispatch()
-  // @ts-ignore
+  const dispatch = useAppDispatch()
+
 
   const [current, setCurrent] = useState('mail')
   let url = useLocation().pathname
@@ -90,11 +94,14 @@ const Panel = () => {
       case 'key-my-contract':
         navigate('my-contract')
         break
+
       case 'key-acts':
         navigate('acts')
         break
+      case 'key-about-me-react-query':
+        navigate('key-about-me-react-query')
+        break
       case 'key-exit':
-        // @ts-ignore
         dispatch(logout())
         console.log('exit')
         break

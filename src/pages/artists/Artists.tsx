@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Form, Table } from 'antd'
 import moment from 'moment'
-import EditableCell from '@/components/EditableCell'
+import EditableCell, { TRecord } from "@/components/EditableCell";
 import { setEditingKey } from '@/redux/admin/adminSlice'
 import { getArtists } from "@/redux/admin/getArtists";
 import { updateArtist } from "@/redux/admin/updateArtist";
@@ -10,7 +10,7 @@ import { updateArtist } from "@/redux/admin/updateArtist";
 const Artists = () => {
   const dispatch = useAppDispatch()
   useEffect(() => {
-    // @ts-ignore
+
     dispatch(getArtists())
     return () => {
       dispatch(setEditingKey(''))
@@ -33,11 +33,11 @@ const Artists = () => {
 
   const [form] = Form.useForm()
   const editingKey = admin.editingKey
-  // @ts-ignore
-  const isEditing = record => record.key === editingKey
-  // @ts-ignore
 
-  const edit = useCallback(record => {
+  const isEditing = (record: TRecord) => record.key === editingKey
+
+
+  const edit = useCallback((record: TRecord) => {
     form.setFieldsValue({
       ...record,
     })
@@ -45,11 +45,13 @@ const Artists = () => {
   },[form,dispatch])
 
 
+
+
   const cancel = useCallback(() => {
     dispatch(setEditingKey(''))
   },[dispatch])
 
-  // @ts-ignore
+
   const save = useCallback(async () => {
     try {
       const artist = await form.validateFields()
@@ -59,7 +61,7 @@ const Artists = () => {
         contract_expiration_date: artist.contract_expiration_date.format('YYYY-MM-DD'),
         deleted:artist.deleted
       }
-      // @ts-ignore
+
       dispatch(updateArtist(userCastedToTypes))
       console.log('dp new artist', artist)
     } catch (errInfo) {
@@ -213,9 +215,9 @@ const Artists = () => {
     if (col.dataType === 'operation') {
       return {
         ...col,
-        // @ts-ignore
+
         // вот эта функция вызывается при каждом рендеринг ячейки скорее всего
-        onCell: record => {
+        onCell: (record: TRecord) => {
           return {
             record,
             dataType: col.dataType,
@@ -230,12 +232,12 @@ const Artists = () => {
         },
       }
     }
-    // @ts-ignore
+
     if (col.editable) {
       return {
         ...col,
-        // @ts-ignore
-        onCell: record => ({
+
+        onCell: (record: TRecord) => ({
           record,
           dataType: col.dataType,
           dataIndex: col.dataIndex,
@@ -247,8 +249,8 @@ const Artists = () => {
 
     return {
       ...col,
-      // @ts-ignore
-      onCell: record => ({
+
+      onCell: (record: TRecord) => ({
         record,
         dataType: col.dataType,
         dataIndex: col.dataIndex,

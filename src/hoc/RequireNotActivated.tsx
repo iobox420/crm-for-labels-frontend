@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppSelector } from "@/hooks/redux";
+import { useAppSelector } from "@/redux/hooks";
 import { Navigate } from "react-router-dom";
 
 // @ts-ignore

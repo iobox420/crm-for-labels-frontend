@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
-import { useAppSelector } from '@/hooks/redux'
+import { useAppSelector } from '@/redux/hooks'
 
 const Redirect: React.FC = () => {
   console.log('redirect')
@@ -27,7 +27,7 @@ const Redirect: React.FC = () => {
         <Navigate to={'/login'} state={{ from: location }} />
       </React.Fragment>
     )
-  }
+  } return null
 }
 
 export default Redirect

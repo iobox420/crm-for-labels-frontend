@@ -1,12 +1,12 @@
 import AdminService from '@/services/AdminService'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { setAuth } from '@/redux/authSlice'
+import { IArtist } from '@/models/IArtist'
 
 export const addArtist = createAsyncThunk(
   'admin/addArtist',
-  async (row, { dispatch, fulfillWithValue, rejectWithValue }) => {
+  async (row:IArtist, { dispatch, fulfillWithValue, rejectWithValue }) => {
     try {
-      // @ts-ignore
       const response = await AdminService.addArtist(row)
       console.log('Артисты успешно добавлен')
       return fulfillWithValue(response.data)

@@ -1,6 +1,6 @@
 import React from 'react'
 import { logout } from '@/redux/authSlice'
-import { useAppDispatch} from "@/hooks/redux";
+import { useAppDispatch} from "@/redux/hooks";
 import { Button, Typography } from 'antd'
 import { useNavigate } from "react-router-dom";
 const { Title } = Typography;
@@ -9,7 +9,7 @@ const NotActivated = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const handleLogout = () => {
-    // @ts-ignore
+
     dispatch(logout())
     setTimeout(() => {
       navigate('/login', { replace: true })

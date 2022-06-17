@@ -90,10 +90,10 @@ const adminSlice = createSlice({
       const index = state.artists.findIndex(
         artist => artist.id_artist_contract === action.payload.id_artist_contract,
       )
+      let deleted = JSON.parse(action.payload.deleted);
       state.artists[index] = {
         ...action.payload,
-        // @ts-ignore
-        deleted:JSON.parse(action.payload.deleted)
+        deleted: deleted
       }
       console.log(' [updateArtist.fulfilled.type]')
     },
@@ -111,7 +111,7 @@ const adminSlice = createSlice({
           created_at: new Date(user.created_at),
         }
       })
-      // @ts-ignore
+
       state.users = users
       state.usersError = ''
       state.isLoadingUsers = false
@@ -128,7 +128,6 @@ const adminSlice = createSlice({
 
       state.users[index] = {
         ...action.payload,
-        // @ts-ignore
         deleted:JSON.parse(action.payload.deleted)
       }
       console.log('[updateUser.fulfilled.type]')

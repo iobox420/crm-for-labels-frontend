@@ -1,17 +1,18 @@
 import ArtistService from '@/services/ArtistService'
-import { setAboutMe } from '@/redux/artist/artistSlice'
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import { clearAboutMeError } from './artistSlice'
 
-export const getAboutMe = () => {
-  // @ts-ignore
-  return async dispatch => {
+export const getAboutMe = createAsyncThunk(
+  'artist/getAboutMe',
+  async (_, { dispatch,fulfillWithValue, rejectWithValue }) => {
     try {
-      console.log('before getAboutMe')
       const response = await ArtistService.getAboutMe()
-      console.log('after getAboutMe')
-      console.log(response)
-      dispatch(setAboutMe(response.data))
-    } catch (e: any) {
-      console.log(e.response?.data?.message)
+      debugger
+      return fulfillWithValue(response.data)
+    } catch (e) {
+      debugger
+      return rejectWithValue(e)
     }
-  }
-}
+  },
+)
+

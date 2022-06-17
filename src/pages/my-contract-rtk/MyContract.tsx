@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { getAboutMe } from "@/redux/artist/getAboutMe";
 import { Card, Space, Typography } from "antd";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import Loading from "@/components/Loading";
 
 const MyContract = () => {
@@ -11,7 +11,7 @@ const MyContract = () => {
   })
   const about = artist.aboutMe
   useEffect(() => {
-    // @ts-ignore
+
     dispatch(getAboutMe())
   }, [dispatch])
 

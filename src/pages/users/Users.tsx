@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getUsers } from '@/redux/admin/getUsers'
 import { Form, Table } from 'antd'
 import moment from 'moment'
@@ -30,11 +30,11 @@ const Users = () => {
 
   const [form] = Form.useForm()
   const editingKey = admin.editingKey
-  // @ts-ignore
-  const isEditing = record => record.key === editingKey
-  // @ts-ignore
 
-  const edit = useCallback(record => {
+  const isEditing =  (record: TRecord)  => record.key === editingKey
+
+
+  const edit = useCallback( (record: TRecord)  => {
     form.setFieldsValue({
       ...record,
     })
@@ -46,7 +46,7 @@ const Users = () => {
     dispatch(setEditingKey(''))
   },[dispatch])
 
-  // @ts-ignore
+
   const save = useCallback(async () => {
     try {
       const user = await form.validateFields()
@@ -54,7 +54,7 @@ const Users = () => {
         ...user,
         created_at: user.created_at.format('YYYY-MM-DD'),
       }
-      // @ts-ignore
+
       dispatch(updateUser(userCastedToTypes))
       console.log('dp new user', user)
     } catch (errInfo) {
@@ -129,8 +129,8 @@ const Users = () => {
     if (col.editable) {
       return {
         ...col,
-        // @ts-ignore
-        onCell: record => ({
+
+        onCell:  (record: TRecord)  => ({
           record,
           dataType: col.dataType,
           dataIndex: col.dataIndex,
@@ -142,8 +142,8 @@ const Users = () => {
 
     return {
       ...col,
-      // @ts-ignore
-      onCell: record => ({
+
+      onCell:  (record: TRecord)  => ({
         record,
         dataType: col.dataType,
         dataIndex: col.dataIndex,

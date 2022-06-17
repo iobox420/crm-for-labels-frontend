@@ -1,9 +1,9 @@
 import $api from '../http/api'
 import { AxiosResponse } from 'axios'
-import { AuthResponse } from '@/models/response/AuthResponse'
+import { IArtist } from '@/models/IArtist'
 
 export default class ArtistService {
-  static async getAboutMe(): Promise<AxiosResponse<AuthResponse>> {
-    return $api.get<AuthResponse>('/artist/about-me', {})
+  static async getAboutMe(): Promise<AxiosResponse<IArtist>> {
+    return $api.get('/artist/about-me', {})
   }
 }

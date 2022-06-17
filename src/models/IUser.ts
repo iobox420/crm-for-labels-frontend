@@ -5,7 +5,7 @@ export interface IUser {
 }
 
 export interface IUserFull extends IUser {
-  created_at: string
+  created_at: Date | string
   deleted: boolean
 }
 

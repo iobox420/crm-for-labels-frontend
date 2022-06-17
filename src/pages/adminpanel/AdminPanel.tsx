@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Layout, Menu, MenuProps } from 'antd'
-import { UnorderedListOutlined} from '@ant-design/icons'
+import { UnorderedListOutlined } from '@ant-design/icons'
 import { Outlet, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '@/redux/authSlice'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 
 const items: MenuProps['items'] = [
   {
@@ -27,7 +27,7 @@ const items: MenuProps['items'] = [
             label: 'All artists rtk-query',
             key: 'key-all-artists-rtk-query',
           },
-/*          {
+          /*          {
             label: 'test',
             key: 'key-test',
           },
@@ -46,9 +46,9 @@ const items: MenuProps['items'] = [
 ]
 const { Header,  Content } = Layout
 const AdminPanel = () => {
-  const dispatch = useDispatch()
-  // @ts-ignore
-  const isAuth = useSelector(({ auth }) => {
+  const dispatch = useAppDispatch()
+
+  const isAuth = useAppSelector(({ auth }) => {
     return auth.isAuth
   })
   const [current, setCurrent] = useState('mail')
@@ -73,7 +73,7 @@ const AdminPanel = () => {
         navigate('test2')
         break*/
       case 'key-exit':
-        // @ts-ignore
+
         dispatch(logout())
         console.log('exit')
         break

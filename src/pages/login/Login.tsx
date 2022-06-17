@@ -4,7 +4,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { login } from '@/redux/authSlice'
-import { useAppSelector } from '@/hooks/redux'
+import { useAppSelector } from '@/redux/hooks'
 
 const { Title } = Typography
 
