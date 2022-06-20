@@ -3,7 +3,7 @@ import AuthService from '@/services/AuthService'
 import { IUser } from '@/models/IUser'
 import axios from 'axios'
 import { AuthResponse } from '@/models/response/AuthResponse'
-import config from '../config'
+
 
 interface IAuthData {
   email: string
@@ -57,7 +57,7 @@ export const logout = createAsyncThunk('auth/logout', async (arg: void, { dispat
 export const checkAuth = createAsyncThunk('auth/checkAuth', async (arg: void, { dispatch }) => {
   dispatch(setLoading(true))
   try {
-    const response = await axios.get<AuthResponse>(`${config.API_URL}/refresh`, {
+    const response = await axios.get<AuthResponse>(`${import.meta.env.VITE_API_URL}/refresh`, {
       withCredentials: true,
     })
     console.log(response)

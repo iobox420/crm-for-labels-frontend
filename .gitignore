@@ -5,3 +5,5 @@ src/.sass-cache/
 dist
 dist-ssr
 *.local
+yarn-error.log
+
