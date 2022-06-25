@@ -30,7 +30,7 @@ const About = () => {
       <Space direction="vertical" size="middle" style={{ display: 'flex', margin: '10px' }}>
         <Card title={about.creative_pseudonym} size="default">
           <Title level={5}>
-            {about.name_2} {about.name_1} {about.name_3}
+            {about.surname} {about.name} {about.patronymic}
           </Title>
           <p>
             email: <b>{about.email}</b>

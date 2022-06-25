@@ -6,12 +6,15 @@ import { addArtist } from './addArtist'
 import { IUserFull } from '@/models/IUser'
 import { getUsers } from './getUsers'
 import { updateUser } from './updateUser'
+import { getResCountRows } from "@/models/response/getResCountRows";
 
-interface AdminState {
+export interface AdminState {
   artists: IArtist[]
+  artistsCount:number
   isLoadingArtists: boolean
   artistsError: string
   users: IUserFull[]
+  usersCount:number
   isLoadingUsers: boolean
   usersError: string
   test: string
@@ -20,9 +23,11 @@ interface AdminState {
 
 const initialState: AdminState = {
   artists: [],
+  artistsCount:0,
   isLoadingArtists: true,
   artistsError: '',
   users: [],
+  usersCount:0,
   isLoadingUsers: true,
   usersError: '',
   test: '1',
@@ -50,9 +55,9 @@ const adminSlice = createSlice({
           id_artist_contract: 0,
           fk_id_user: 0,
           creative_pseudonym: '',
-          name_2: '',
-          name_1: '',
-          name_3: '',
+          surname: '',
+          name: '',
+          patronymic: '',
           document: '',
           address: '',
           email: '',
@@ -69,10 +74,12 @@ const adminSlice = createSlice({
       ]
     },
   },
+
   extraReducers: {
-    [getArtists.fulfilled.type]: (state, action: PayloadAction<IArtist[]>) => {
+    [getArtists.fulfilled.type]: (state, action: PayloadAction<getResCountRows<IArtist[]>>) => {
       console.log('[getArtists.fulfilled.type]')
-      state.artists = action.payload
+      state.artists = action.payload.rows
+      state.artistsCount = action.payload.count
       state.artistsError = ''
       state.isLoadingArtists = false
     },
@@ -90,6 +97,7 @@ const adminSlice = createSlice({
       const index = state.artists.findIndex(
         artist => artist.id_artist_contract === action.payload.id_artist_contract,
       )
+      // @ts-ignore need
       let deleted = JSON.parse(action.payload.deleted);
       state.artists[index] = {
         ...action.payload,
@@ -103,15 +111,17 @@ const adminSlice = createSlice({
         ...action.payload,
       }
     },
-    [getUsers.fulfilled.type]: (state, action: PayloadAction<IUserFull[]>) => {
+    [getUsers.fulfilled.type]: (state, action: PayloadAction<getResCountRows<IUserFull[]>>) => {
       // noinspection UnnecessaryLocalVariableJS
-      const users = action.payload.map(user => {
+
+      const users = action.payload.rows.map(user => {
         return {
           ...user,
-          created_at: new Date(user.created_at),
+          createdAt: new Date(user.createdAt),
+          updatedAt: new Date(user.updatedAt),
         }
       })
-
+      state.usersCount = action.payload.count
       state.users = users
       state.usersError = ''
       state.isLoadingUsers = false
@@ -125,9 +135,9 @@ const adminSlice = createSlice({
     [updateUser.fulfilled.type]: (state, action: PayloadAction<IUserFull>) => {
       state.editingKey = ''
       const index = state.users.findIndex(user => user.id_user === action.payload.id_user)
-
       state.users[index] = {
         ...action.payload,
+        // @ts-ignore need
         deleted:JSON.parse(action.payload.deleted)
       }
       console.log('[updateUser.fulfilled.type]')
@@ -137,4 +147,4 @@ const adminSlice = createSlice({
 
 export default adminSlice.reducer
 
-export const { setArtists, deleteRow, addRow, setEditingKey } = adminSlice.actions
+export const {  setEditingKey } = adminSlice.actions

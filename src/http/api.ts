@@ -23,6 +23,7 @@
           const response = await axios.get<AuthResponse>(`${import.meta.env.VITE_API_URL}/refresh`, {
             withCredentials: true,
           })
+
           localStorage.setItem('token', response.data.accessToken)
           return $api.request(originalRequest)
         } catch (e) {

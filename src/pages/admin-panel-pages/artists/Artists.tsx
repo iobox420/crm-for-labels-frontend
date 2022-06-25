@@ -1,56 +1,55 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Form, Table } from 'antd'
 import moment from 'moment'
-import EditableCell, { TRecord } from "@/components/EditableCell";
+import EditableCell, { TRecord } from '@/components/EditableCell'
 import { setEditingKey } from '@/redux/admin/adminSlice'
-import { getArtists } from "@/redux/admin/getArtists";
-import { updateArtist } from "@/redux/admin/updateArtist";
+import { getArtists } from '@/redux/admin/getArtists'
+import { updateArtist } from '@/redux/admin/updateArtist'
+import { Link } from 'react-router-dom'
 
 const Artists = () => {
   const dispatch = useAppDispatch()
   useEffect(() => {
-
-    dispatch(getArtists())
+    dispatch(getArtists({ page: 1, limit: 10 }))
     return () => {
       dispatch(setEditingKey(''))
     }
   }, [dispatch])
-  //key	id_user	email	password	role	created_at	deleted	operation
+  //key	id_user	email	password	role	createdAt	deleted	operation
   const admin = useAppSelector(state => state.admin)
   let artists = useAppSelector(state => state.admin.artists)
 
-  artists = artists.map((user, i) => {
+  artists = artists.map((artist, i) => {
     return {
-      ...user,
+      ...artist,
       key: i,
-      contract_agreement: moment(user.contract_agreement),
-      contract_expiration_date: moment(user.contract_expiration_date),
-      deleted: JSON.stringify(user.deleted),
+      ref:<Link to={`${artist.id_artist_contract}`}>to artist page</Link>,
+      contract_agreement: moment(artist.contract_agreement),
+      contract_expiration_date: moment(artist.contract_expiration_date),
+      deleted: JSON.stringify(artist.deleted),
     }
   }) as any
-  console.log('artists', artists);
+  console.log('artists', artists)
 
   const [form] = Form.useForm()
   const editingKey = admin.editingKey
 
   const isEditing = (record: TRecord) => record.key === editingKey
 
-
-  const edit = useCallback((record: TRecord) => {
-    form.setFieldsValue({
-      ...record,
-    })
-    dispatch(setEditingKey(record.key))
-  },[form,dispatch])
-
-
-
+  const edit = useCallback(
+    (record: TRecord) => {
+      form.setFieldsValue({
+        ...record,
+      })
+      dispatch(setEditingKey(record.key))
+    },
+    [form, dispatch],
+  )
 
   const cancel = useCallback(() => {
     dispatch(setEditingKey(''))
-  },[dispatch])
-
+  }, [dispatch])
 
   const save = useCallback(async () => {
     try {
@@ -59,7 +58,7 @@ const Artists = () => {
         ...artist,
         contract_agreement: artist.contract_agreement.format('YYYY-MM-DD'),
         contract_expiration_date: artist.contract_expiration_date.format('YYYY-MM-DD'),
-        deleted:artist.deleted
+        deleted: artist.deleted,
       }
 
       dispatch(updateArtist(userCastedToTypes))
@@ -67,14 +66,21 @@ const Artists = () => {
     } catch (errInfo) {
       console.log('Validate Failed:', errInfo)
     }
-  },[form, dispatch])
-/*
- key	id_artist_contract	fk_id_user	creative_pseudonym	name_2	name_1
- name_3	document	address	email	inn	snils	bank_details
- contract_number	contract_agreement	contract_fee	contract_fee_in_words
- contract_expiration_date	deleted	operation
-*/
+  }, [form, dispatch])
+  /*
+   key	id_artist_contract	fk_id_user	creative_pseudonym	surname	name
+   patronymic	document	address	email	inn	snils	bank_details
+   contract_number	contract_agreement	contract_fee	contract_fee_in_words
+   contract_expiration_date	deleted	operation
+  */
   const columns = [
+    {
+      title: 'ref',
+      dataIndex: 'ref',
+      key: 'ref',
+      dataType: 'ref',
+      editable: false,
+    },
     {
       title: 'id_artist_contract',
       dataIndex: 'id_artist_contract',
@@ -97,23 +103,23 @@ const Artists = () => {
       editable: true,
     },
     {
-      title: 'name_2',
-      dataIndex: 'name_2',
-      key: 'name_2',
+      title: 'surname',
+      dataIndex: 'surname',
+      key: 'surname',
       dataType: 'text',
       editable: true,
     },
     {
-      title: 'name_1',
-      dataIndex: 'name_1',
-      key: 'name_1',
+      title: 'name',
+      dataIndex: 'name',
+      key: 'name',
       dataType: 'text',
       editable: true,
     },
     {
-      title: 'name_3',
-      dataIndex: 'name_3',
-      key: 'name_3',
+      title: 'patronymic',
+      dataIndex: 'patronymic',
+      key: 'patronymic',
       dataType: 'text',
       editable: true,
     },
@@ -159,7 +165,6 @@ const Artists = () => {
       key: 'bank_details',
       dataType: 'text',
       editable: true,
-
     },
     {
       title: 'contract_number',
@@ -281,6 +286,18 @@ const Artists = () => {
         bordered
         rowClassName="editable-row"
         columns={columnsWithNewProps}
+        pagination={{
+          pageSize: 10,
+          total: admin.artistsCount,
+          onChange: page => {
+            dispatch(
+              getArtists({
+                page: page,
+                limit: 10,
+              }),
+            )
+          },
+        }}
       />
       ;
     </Form>

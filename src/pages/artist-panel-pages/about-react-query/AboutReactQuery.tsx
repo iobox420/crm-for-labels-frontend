@@ -26,7 +26,7 @@ const AboutReactQuery: React.FC = () => {
       <Space direction="vertical" size="middle" style={{ display: 'flex', margin: '10px' }}>
         <Card title={data?.data.creative_pseudonym} size="default">
           <Title level={5}>
-            {data?.data.name_2} {data?.data.name_1} {data?.data.name_3}
+            {data?.data.surname} {data?.data.name} {data?.data.patronymic}
           </Title>
           <p>
             email: <b>{data?.data.email}</b>

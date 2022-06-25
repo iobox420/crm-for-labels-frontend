@@ -7,7 +7,7 @@ interface ErrorComponent  {
 }
 
 const Error: React.FC<ErrorComponent> = ({ message }) => {
-  debugger
+
   return <div>{message}</div>
 }
 

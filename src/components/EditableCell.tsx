@@ -177,7 +177,7 @@ const EditableCell:React.FC<IEditableCell> = ({
     }
   }
 
-  return <td {...restProps}> <Form.Item name={dataIndex} rules={[{ required: false }]}  style={{
+  return <td {...restProps}> <Form.Item /*name={dataIndex}*/ rules={[{ required: false }]}  style={{
     margin: 0,
   }}>{children}</Form.Item></td>
 }

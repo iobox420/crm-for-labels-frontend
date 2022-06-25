@@ -2,9 +2,9 @@ export interface IArtist {
   id_artist_contract: number
   fk_id_user: number
   creative_pseudonym: string
-  name_2: string
-  name_1: string
-  name_3: string
+  surname: string
+  name: string
+  patronymic: string
   document: string
   address: string
   email: string

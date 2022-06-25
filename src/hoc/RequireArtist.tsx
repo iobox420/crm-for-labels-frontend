@@ -1,10 +1,9 @@
-// @ts-nocheck
 import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '@/redux/hooks'
 
-const RequireArtist = ({ children }) => {
-  const auth = useSelector(({ auth }) => {
+const RequireArtist = ({ children }: any) => {
+  const auth = useAppSelector(({ auth }) => {
     return auth
   })
   const location = useLocation()

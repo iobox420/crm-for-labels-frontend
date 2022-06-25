@@ -10,12 +10,15 @@ import { setEditingKey } from '@/redux/admin/adminSlice'
 const Users = () => {
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(getUsers())
+    dispatch(getUsers({
+      page:1,
+      limit:10
+    }))
     return () => {
       dispatch(setEditingKey(''))
     }
   }, [dispatch])
-  //key	id_user	email	password	role	created_at	deleted	operation
+  //key	id_user	email	password	role	createdAt	deleted	operation
   const admin = useAppSelector(state => state.admin)
   let users = useAppSelector(state => state.admin.users)
 
@@ -23,7 +26,9 @@ const Users = () => {
     return {
       ...user,
       key: i,
-      created_at: moment(user.created_at),
+      ref:user.id_user,
+      createdAt: moment(user.createdAt),
+      updatedAt: moment(user.updatedAt),
       deleted: JSON.stringify(user.deleted),
     }
   }) as any
@@ -52,7 +57,8 @@ const Users = () => {
       const user = await form.validateFields()
       const userCastedToTypes = {
         ...user,
-        created_at: user.created_at.format('YYYY-MM-DD'),
+        createdAt: user.createdAt.format('YYYY-MM-DD'),
+        updatedAt: user.updatedAt.format('YYYY-MM-DD'),
       }
 
       dispatch(updateUser(userCastedToTypes))
@@ -63,6 +69,7 @@ const Users = () => {
   },[form, dispatch])
 
   const columns = [
+
     {
       title: 'id_user',
       dataIndex: 'id_user',
@@ -85,9 +92,16 @@ const Users = () => {
       editable: true,
     },
     {
-      title: 'created_at',
-      dataIndex: 'created_at',
-      key: 'created_at',
+      title: 'createdAt',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      dataType: 'date',
+      editable: true,
+    },
+    {
+      title: 'updatedAt',
+      dataIndex: 'updatedAt',
+      key: 'updatedAt',
       dataType: 'date',
       editable: true,
     },
@@ -161,6 +175,8 @@ const Users = () => {
     return <>ошибка</>
   }
   console.log('render table')
+  const totalPages = Math.ceil(admin.usersCount/10)
+  console.log('tp', totalPages);
   return (
     <Form form={form} component={false}>
       <Table
@@ -174,6 +190,17 @@ const Users = () => {
         bordered
         rowClassName="editable-row"
         columns={columnsWithNewProps}
+        pagination={{
+          pageSize: 10,
+          total: admin.usersCount,
+          onChange: (page) => {
+            dispatch(getUsers({
+              page:page,
+              limit:10
+            }))
+          },
+        }}
+
       />
       ;
     </Form>

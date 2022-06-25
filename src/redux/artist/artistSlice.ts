@@ -3,13 +3,13 @@ import { getAboutMe } from './getAboutMe'
 import IError from '@/models/response/IError'
 import RejectedValue from '@/models/RejectedValue'
 
-interface IAboutMe {
+export interface IAboutMe {
   id_artist_contract: number
   fk_id_user: number
   creative_pseudonym: string
-  name_2: string
-  name_1: string
-  name_3: string
+  surname: string
+  name: string
+  patronymic: string
   document: string
   address: string
   email: string
@@ -35,9 +35,9 @@ const initArtistState: ArtistState = {
     id_artist_contract: 0,
     fk_id_user: 0,
     creative_pseudonym: '',
-    name_2: '',
-    name_1: '',
-    name_3: '',
+    surname: '',
+    name: '',
+    patronymic: '',
     document: '',
     address: '',
     email: '',
@@ -67,7 +67,7 @@ const artistSlice = createSlice({
     [getAboutMe.fulfilled.type]: (state, action: PayloadAction<IAboutMe>) => {
       console.log('about me loading successfull')
       console.log(action.payload)
-      debugger
+
       state.aboutMe = {
         ...action.payload,
       }

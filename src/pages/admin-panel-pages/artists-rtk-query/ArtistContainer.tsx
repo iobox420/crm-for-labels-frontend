@@ -20,7 +20,7 @@ const ArtistContainer: FC = () => {
         {/* <button onClick={handleCreate}>Add new post</button>*/}
         {isLoading && <h1>Идет загрузка...</h1>}
         {error && <h1>Произошла ошибка при загрузке</h1>}
-        {artists && artists.map((artist, i) => <div key={i}>{artist.name_2} {artist.name_1} {artist.name_3} {artist.creative_pseudonym}</div>)}
+        {artists && artists.map((artist, i) => <div key={i}>{artist.surname} {artist.name} {artist.patronymic} {artist.creative_pseudonym}</div>)}
 
       </div>
       <button onClick={handleCreate}>create artist</button>

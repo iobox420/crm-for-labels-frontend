@@ -1,12 +1,13 @@
 import AdminService from '@/services/AdminService'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { setAuth } from '@/redux/authSlice'
+import { PageLimit } from "@/models/PageLimit";
 
 export const getArtists = createAsyncThunk(
   'admin/getArtists',
-  async (_, { dispatch, fulfillWithValue, rejectWithValue }) => {
+  async (props:PageLimit, { dispatch, fulfillWithValue, rejectWithValue }) => {
     try {
-      const response = await AdminService.getArtists()
+      const response = await AdminService.getArtists(props)
       console.log('Артисты успешно загружены')
       return fulfillWithValue(response.data)
     } catch (e: any) {

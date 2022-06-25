@@ -1,14 +1,16 @@
 import AdminService from '@/services/AdminService'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { setAuth } from '@/redux/authSlice'
+import { PageLimit } from '@/models/PageLimit'
 
 export const getUsers = createAsyncThunk(
   'admin/getUsers',
-  async (_, { dispatch, fulfillWithValue, rejectWithValue }) => {
+  async (props:PageLimit, { dispatch, fulfillWithValue, rejectWithValue }) => {
     try {
-      const response = await AdminService.getUsers()
+
+      const response = await AdminService.getUsers(props)
       console.log('Users успешно загружены')
-      console.log(response);
+      console.log(response)
       return fulfillWithValue(response.data)
     } catch (e: any) {
       if (e.response.status === 401) {

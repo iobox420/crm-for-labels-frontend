@@ -2,8 +2,8 @@ import React from "react";
 import { useAppSelector } from "@/redux/hooks";
 import { Navigate } from "react-router-dom";
 
-// @ts-ignore
-const RequireNotActivated = ({ children}) => {
+
+const RequireNotActivated = ({ children}: any) => {
   const auth = useAppSelector(({ auth }) => {
     return auth
   })

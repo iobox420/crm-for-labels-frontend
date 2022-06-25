@@ -7,10 +7,10 @@ export const getAboutMe = createAsyncThunk(
   async (_, { dispatch,fulfillWithValue, rejectWithValue }) => {
     try {
       const response = await ArtistService.getAboutMe()
-      debugger
+
       return fulfillWithValue(response.data)
     } catch (e) {
-      debugger
+
       return rejectWithValue(e)
     }
   },

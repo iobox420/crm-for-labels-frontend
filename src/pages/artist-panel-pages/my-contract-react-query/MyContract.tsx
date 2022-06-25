@@ -16,7 +16,7 @@ const MyContract = () => {
   }
   const { isLoading, error, data } = useAboutMe()
   if (isLoading) return <Loading />
-  debugger
+
   if (error) return <Error message={error?.response?.data?.message!} />
 
   return (
