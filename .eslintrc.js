@@ -53,9 +53,11 @@ module.exports = {
 
     'no-empty-pattern': 0,
 
-    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+    'react-hooks/rules-of-hooks': 'error', // Check rules of Hooks
     'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
 
     'no-debugger':0,
+
+
   },
 }

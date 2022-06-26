@@ -13,10 +13,10 @@ import {
   Row,
   Select,
 } from 'antd'
-import { login, signup } from '@/redux/authSlice'
+import { login, signup } from '@/processes/redux/authSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { useAppSelector } from '@/redux/hooks'
+import { useAppSelector } from '@/processes/redux/hooks'
 
 const { Option } = Select
 const residences = [

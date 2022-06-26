@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Layout, Menu, MenuProps } from 'antd'
 import { UnorderedListOutlined } from '@ant-design/icons'
 import { Outlet, useNavigate } from 'react-router-dom'
-import { logout } from '@/redux/authSlice'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { logout } from '@/processes/redux/authSlice'
+import { useAppDispatch, useAppSelector } from '@/processes/redux/hooks'
 
 const items: MenuProps['items'] = [
   {
@@ -23,18 +23,7 @@ const items: MenuProps['items'] = [
             label: 'All users',
             key: 'key-all-users',
           },
-          {
-            label: 'All artists rtk-query',
-            key: 'key-all-artists-rtk-query',
-          },
-          /*          {
-            label: 'test',
-            key: 'key-test',
-          },
-          {
-            label: 'test2',
-            key: 'key-test2',
-          },*/
+
         ],
       },
       {
@@ -60,20 +49,10 @@ const AdminPanel = () => {
       case 'key-all-artists':
         navigate('artists')
         break
-      case 'key-all-artists-rtk-query':
-        navigate('artists-rtk')
-        break
       case 'key-all-users':
         navigate('users')
         break
-/*      case 'key-test':
-        navigate('test')
-        break
-      case 'key-test2':
-        navigate('test2')
-        break*/
       case 'key-exit':
-
         dispatch(logout())
         console.log('exit')
         break

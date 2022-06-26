@@ -3,8 +3,8 @@ import { Button, Checkbox, Form, Input, Typography } from 'antd'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { login } from '@/redux/authSlice'
-import { useAppSelector } from '@/redux/hooks'
+import { login } from '@/processes/redux/authSlice'
+import { useAppSelector } from '@/processes/redux/hooks'
 
 const { Title } = Typography
 
