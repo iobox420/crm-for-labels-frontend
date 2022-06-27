@@ -8,7 +8,6 @@ export const addArtist = createAsyncThunk(
   async (row:IArtist, { dispatch, fulfillWithValue, rejectWithValue }) => {
     try {
       const response = await AdminService.addArtist(row)
-      console.log('Артисты успешно добавлен')
       return fulfillWithValue(response.data)
     } catch (e: any) {
       if (e.response.status === 401) {

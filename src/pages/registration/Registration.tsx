@@ -98,7 +98,6 @@ const Registration = () => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
   const onFinish = (values: any) => {
-    console.log('Received values of form: ', values)
     dispatch<any>(
       signup({
         email: values.email,

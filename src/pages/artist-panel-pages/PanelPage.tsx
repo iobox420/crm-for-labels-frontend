@@ -83,7 +83,6 @@ const PanelPage = () => {
   let navigate = useNavigate()
   const onClick: MenuProps['onClick'] = e => {
     setCurrent(e.key)
-    console.log('click ', e)
     switch (e.key) {
       case 'key-about-me':
         navigate('about-me')
@@ -96,10 +95,8 @@ const PanelPage = () => {
         break
       case 'key-exit':
         dispatch(logout())
-        console.log('exit')
         break
       default:
-        console.log('default')
     }
   }
 

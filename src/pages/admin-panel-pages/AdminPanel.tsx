@@ -44,7 +44,6 @@ const AdminPanel = () => {
   const navigate = useNavigate()
   const onClick: MenuProps['onClick'] = e => {
     setCurrent(e.key)
-    console.log('click ', e)
     switch (e.key) {
       case 'key-all-artists':
         navigate('artists')
@@ -54,10 +53,8 @@ const AdminPanel = () => {
         break
       case 'key-exit':
         dispatch(logout())
-        console.log('exit')
         break
       default:
-        console.log('default')
     }
   }
   if (!isAuth) {

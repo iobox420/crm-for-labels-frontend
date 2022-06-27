@@ -9,8 +9,7 @@ export default class AuthService {
   }
 
   static async signup(newUser:ISignUpData): Promise<AxiosResponse<AuthResponse>> {
-    console.log(newUser)
-    return $api.post<AuthResponse>('/signup', {...newUser })
+     return $api.post<AuthResponse>('/signup', {...newUser })
   }
 
   static async logout(): Promise<void> {

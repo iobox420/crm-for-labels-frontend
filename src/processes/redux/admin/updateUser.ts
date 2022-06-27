@@ -6,9 +6,7 @@ export const updateUser = createAsyncThunk(
   'admin/updateUser',
   async (user: IUserFull, { rejectWithValue }) => {
     try {
-      console.log('update artist', user)
       await AdminService.updateUser(user)
-      console.log('Данные User успешно обновлены')
       return user
     } catch (e: any) {
       rejectWithValue('Не удалось обновить данные User')

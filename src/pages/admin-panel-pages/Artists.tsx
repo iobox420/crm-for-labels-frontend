@@ -32,7 +32,6 @@ const Artists = () => {
       deleted: JSON.stringify(artist.deleted),
     }
   }) as any
-  console.log('artists', artists)
 
   const [form] = Form.useForm()
   const editingKey = admin.editingKey
@@ -64,9 +63,7 @@ const Artists = () => {
       }
 
       dispatch(updateArtist(userCastedToTypes))
-      console.log('dp new artist', artist)
     } catch (errInfo) {
-      console.log('Validate Failed:', errInfo)
     }
   }, [form, dispatch])
   /*
@@ -266,15 +263,12 @@ const Artists = () => {
     }
   })
 
-  console.log('artists', artists)
   if (admin.isLoadingArtists) {
     return <>Loading</>
   }
-  console.log(admin)
   if (admin.artistsError !== '') {
     return <>ошибка</>
   }
-  console.log('render table')
   return (
     <Form form={form} component={false}>
       <Table

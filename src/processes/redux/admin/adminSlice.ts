@@ -77,18 +77,15 @@ const adminSlice = createSlice({
 
   extraReducers: {
     [getArtists.fulfilled.type]: (state, action: PayloadAction<getResCountRows<IArtist[]>>) => {
-      console.log('[getArtists.fulfilled.type]')
       state.artists = action.payload.rows
       state.artistsCount = action.payload.count
       state.artistsError = ''
       state.isLoadingArtists = false
     },
     [getArtists.pending.type]: state => {
-      console.log('[getArtists.pending.type]')
       state.isLoadingArtists = true
     },
     [getArtists.rejected.type]: (state, action: PayloadAction<string>) => {
-      console.log('[getArtists.rejected.type]')
       state.isLoadingArtists = false
       state.artistsError = action.payload
     },
@@ -103,7 +100,6 @@ const adminSlice = createSlice({
         ...action.payload,
         deleted: deleted
       }
-      console.log(' [updateArtist.fulfilled.type]')
     },
     [addArtist.fulfilled.type]: (state, action: PayloadAction<IArtist>) => {
       state.artists = {
@@ -127,9 +123,7 @@ const adminSlice = createSlice({
       state.isLoadingUsers = false
     },
     [getUsers.rejected.type]: (state, action: PayloadAction<string>) => {
-      console.log('[getUsers.rejected.type]')
       state.isLoadingUsers = false
-      console.log(action.payload)
       state.usersError = action.payload
     },
     [updateUser.fulfilled.type]: (state, action: PayloadAction<IUserFull>) => {
@@ -140,7 +134,6 @@ const adminSlice = createSlice({
         // @ts-ignore need
         deleted:JSON.parse(action.payload.deleted)
       }
-      console.log('[updateUser.fulfilled.type]')
     },
   },
 })
