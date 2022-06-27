@@ -9,8 +9,6 @@ export const getUsers = createAsyncThunk(
     try {
 
       const response = await AdminService.getUsers(props)
-      console.log('Users успешно загружены')
-      console.log(response)
       return fulfillWithValue(response.data)
     } catch (e: any) {
       if (e.response.status === 401) {

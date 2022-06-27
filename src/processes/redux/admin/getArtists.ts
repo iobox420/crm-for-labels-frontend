@@ -8,7 +8,6 @@ export const getArtists = createAsyncThunk(
   async (props:PageLimit, { dispatch, fulfillWithValue, rejectWithValue }) => {
     try {
       const response = await AdminService.getArtists(props)
-      console.log('Артисты успешно загружены')
       return fulfillWithValue(response.data)
     } catch (e: any) {
       if (e.response.status === 401) {

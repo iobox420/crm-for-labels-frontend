@@ -17,13 +17,10 @@ interface IAuthData {
 export const login = createAsyncThunk(
   'auth/login',
   async ({ email, password }: IAuthData, { dispatch }) => {
-    console.log('login')
     try {
       const response = await AuthService.login(email, password)
-      console.log(response)
       localStorage.setItem('token', response.data.accessToken)
       dispatch(setAuth(true))
-      console.log(response.data.user)
       dispatch(setUser(response.data.user))
     } catch (e: any) {
       console.log(e.response?.data?.message)
@@ -35,7 +32,6 @@ export const signup = createAsyncThunk(
   async (newUser: ISignUpData, { dispatch }) => {
     try {
       const response = await AuthService.signup(newUser)
-      console.log(response)
       localStorage.setItem('token', response.data.accessToken)
       dispatch(setAuth(true))
       dispatch(setUser(response.data.user))
@@ -62,7 +58,6 @@ export const checkAuth = createAsyncThunk('auth/checkAuth', async (arg: void, { 
     const response = await axios.get<AuthResponse>(`${import.meta.env.VITE_API_URL}/refresh`, {
       withCredentials: true,
     })
-    console.log(response)
     localStorage.setItem('token', response.data.accessToken)
     dispatch(setAuth(true))
     dispatch(setUser(response.data.user))

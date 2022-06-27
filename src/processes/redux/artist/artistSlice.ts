@@ -64,21 +64,16 @@ const artistSlice = createSlice({
   },
   extraReducers: {
     [getAboutMe.fulfilled.type]: (state, action: PayloadAction<IAboutMe>) => {
-      console.log('about me loading successfull')
-      console.log(action.payload)
-
       state.aboutMe = {
         ...action.payload,
       }
       state.isLoadingAboutMe = true
     },
     [getAboutMe.rejected.type]: (state, action: PayloadAction<RejectedValue>) => {
-      console.log('[getAboutMe.rejected.type]');
       state.aboutMeError = action.payload.response.data.message
       state.isLoadingAboutMe = true
     },
     [getAboutMe.pending.type]: state => {
-      console.log('pending');
       state.aboutMeError = ''
     },
   },

@@ -62,9 +62,7 @@ const Users = () => {
         createdAt: user.createdAt.format('YYYY-MM-DD'),
         updatedAt: user.updatedAt.format('YYYY-MM-DD'),
       }
-
       dispatch(updateUser(userCastedToTypes))
-      console.log('dp new user', user)
     } catch (errInfo) {
       console.log('Validate Failed:', errInfo)
     }
@@ -168,17 +166,13 @@ const Users = () => {
     }
   })
 
-  console.log('users', users)
   if (admin.isLoadingUsers) {
     return <>Loading</>
   }
-  console.log(admin)
   if (admin.usersError !== '') {
     return <>ошибка</>
   }
-  console.log('render table')
   const totalPages = Math.ceil(admin.usersCount/10)
-  console.log('tp', totalPages);
   return (
     <Form form={form} component={false}>
       <Table

@@ -32,7 +32,7 @@ const ActsTable: React.FC = () => {
     },
   })
   const handleAdd = () => {
-    debugger
+
     mutation.mutate({
       fk_id_artist_contract: rq.selectedArtistId,
     })

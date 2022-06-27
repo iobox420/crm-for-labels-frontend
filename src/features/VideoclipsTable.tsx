@@ -1,6 +1,6 @@
 import React from 'react'
 import TableEditable from './TableEditable'
-import { Button, Card, Space } from 'antd'
+import { Card, Space } from 'antd'
 import { useMutation, useQuery } from 'react-query'
 import AdminService from '@/processes/services/AdminService'
 import { useAppSelector } from '@/processes/redux/hooks'
@@ -10,8 +10,8 @@ import Loading from '@/widgets/Loading'
 import Error from '@/widgets/Error'
 import { queryClient } from '@/app/main'
 import { IVideoclip } from '@/processes/models/IVideoclip'
-import NothingData from "@/widgets/NothingData";
-import AddRowButton from "@/shared/AddRowButton";
+import NothingData from '@/widgets/NothingData'
+import AddRowButton from '@/shared/AddRowButton'
 
 const VideoclipsTable: React.FC = () => {
   const rq = useAppSelector(({ rq }) => rq)
@@ -32,14 +32,14 @@ const VideoclipsTable: React.FC = () => {
     },
   })
   const handleAdd = () => {
-    debugger
+
     mutation.mutate({
       fk_id_artist_contract: rq.selectedArtistId,
     })
   }
 
   const { isLoading, error, data } = useVideoclips()
-  const nothing = data?.data.length === 0;
+  const nothing = data?.data.length === 0
   if (nothing)
     return (
       <div>
