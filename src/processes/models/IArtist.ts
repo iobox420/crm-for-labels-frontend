@@ -16,5 +16,5 @@ export interface IArtist {
   contract_fee: string
   contract_fee_in_words: string
   contract_expiration_date: string
-  deleted: string | boolean
+  deleted: "true" | "false"
 }

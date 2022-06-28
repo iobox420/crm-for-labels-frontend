@@ -91,15 +91,11 @@ const adminSlice = createSlice({
     },
     [updateArtist.fulfilled.type]: (state, action: PayloadAction<IArtist>) => {
       state.editingKey = ''
+
       const index = state.artists.findIndex(
         artist => artist.id_artist_contract === action.payload.id_artist_contract,
       )
-      // @ts-ignore need
-      let deleted = JSON.parse(action.payload.deleted);
-      state.artists[index] = {
-        ...action.payload,
-        deleted: deleted
-      }
+      state.artists[index] = action.payload
     },
     [addArtist.fulfilled.type]: (state, action: PayloadAction<IArtist>) => {
       state.artists = {

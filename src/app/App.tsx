@@ -16,6 +16,7 @@ import PanelPage from '../pages/artist-panel-pages/PanelPage'
 import RequireArtist from '../entities/hoc/RequireArtist'
 import AboutPage from '../pages/artist-panel-pages/AboutPage'
 import MyContractPage from '../pages/artist-panel-pages/MyContractPage'
+import ArtistsRQ from "@/pages/admin-panel-pages/ArtistsRQ/ArtistsRQ";
 
 function App() {
   const dispatch = useAppDispatch()
@@ -87,8 +88,8 @@ function App() {
             index
             element={
               <RequireAdmin>
-                <div><h1><Link to={'/admin-panel/artists/1'}>refresh</Link></h1></div>
-                {/* <Navigate to={'artists'} state={{ from: location }} />*/}
+             {/*   <div><h1><Link to={'/admin-panel/artists/1'}>refresh</Link></h1></div>*/}
+                  <ArtistsRQ />
               </RequireAdmin>
             }
           />

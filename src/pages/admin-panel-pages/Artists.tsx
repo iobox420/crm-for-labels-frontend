@@ -43,6 +43,7 @@ const Artists = () => {
       form.setFieldsValue({
         ...record,
       })
+      console.log(record);
       dispatch(setEditingKey(record.key))
     },
     [form, dispatch],
@@ -55,6 +56,7 @@ const Artists = () => {
   const save = useCallback(async () => {
     try {
       const artist = await form.validateFields()
+      console.log(artist);
       const userCastedToTypes = {
         ...artist,
         contract_agreement: artist.contract_agreement.format('YYYY-MM-DD'),
@@ -64,6 +66,7 @@ const Artists = () => {
 
       dispatch(updateArtist(userCastedToTypes))
     } catch (errInfo) {
+      console.log(errInfo);
     }
   }, [form, dispatch])
   /*
