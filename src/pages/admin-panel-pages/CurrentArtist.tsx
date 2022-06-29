@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from "react";
 import {  useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { AxiosError, AxiosResponse } from 'axios'
@@ -20,6 +20,10 @@ import {setSelectedArtist,setSelectedArtistId} from '@/processes/redux/reactQuer
 
 const CurrentArtist: React.FC = () => {
   const { id } = useParams()
+/*  useEffect( async () => {
+    const test = await AdminService.getActs({ fk_id_artist_contract: '1' })
+    debugger
+  },[])*/
   const dispatch = useAppDispatch()
   dispatch(setSelectedArtistId(id));
   const useAboutArtist = () => {
@@ -28,6 +32,9 @@ const CurrentArtist: React.FC = () => {
       () => AdminService.getAboutArtist({ id_artist_contract: id }),
     )
   }
+
+
+
   const { isLoading, error, data } = useAboutArtist()
   if (isLoading) return <Loading />
   if (error) return <Error message={error?.response?.data?.message!} />

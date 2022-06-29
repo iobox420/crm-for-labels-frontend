@@ -1,12 +1,14 @@
 import { Table } from "antd";
 import React from "react";
-import NewCell from "@/pages/admin-panel-pages/ArtistsRQ/EditableCell";
-import EditableCell from "@/pages/admin-panel-pages/ArtistsRQ/EditableCell";
+import EditableCell from "@/shared/EditableCell";
 
+export interface ITableEditable<D, C=any>  {
+  data: D;
+  columns: C;
+}
 
-// @ts-ignore
-const TableEditablev1 = ({ data, columns }) => {
-  // @ts-ignore
+function TableEditablev <ITableEditable> ({ data, columns, count, setPage, pageSize }) {
+
   const dataWithKey = data.map((row, i) => {
     return {
       key: i,
@@ -20,10 +22,14 @@ const TableEditablev1 = ({ data, columns }) => {
           cell: EditableCell,
         },
       }} dataSource={dataWithKey}  columns={columns} pagination={{
-        pageSize: 100,
+        pageSize: pageSize,
+        total: count,
+        onChange: page => {
+          setPage(page)
+        },
       }} />
     </div>
   )
 }
 
-export default TableEditablev1
+export default TableEditablev

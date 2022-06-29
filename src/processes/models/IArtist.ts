@@ -17,4 +17,5 @@ export interface IArtist {
   contract_fee_in_words: string
   contract_expiration_date: string
   deleted: "true" | "false"
+  key:number
 }

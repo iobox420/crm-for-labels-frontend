@@ -1,37 +1,52 @@
+import { IUserFull } from '@/processes/models/IUser'
 import React from 'react'
 
-function getColumns(firstRow, edKey, setEdKey, edit, cancel, save) {
-  const isEditing = record => record.key === edKey
+function getColumnsUsers(edKey:number | null, edit:unknown, cancel:unknown, save:unknown) {
+  const isEditing = (record:IUserFull) => record.key === edKey
 
   const columns = [
-    {
+    /*{
       title: 'ref',
       dataIndex: 'id_artist_contract',
       key: 'link',
       dataType: 'link',
       linkfield: 'id_artist_contract',
-    },
+    },*/
     {
-      title: 'id_artist_contract',
-      dataIndex: 'id_artist_contract',
-      key: 'id_artist_contract',
+      title: 'id_user',
+      dataIndex: 'id_user',
+      key: 'id_user',
       dataType: 'text',
       editable: false,
     },
     {
-      title: 'creative_pseudonym',
-      dataIndex: 'creative_pseudonym',
-      key: 'creative_pseudonym',
+      title: 'email',
+      dataIndex: 'email',
+      key: 'email',
       dataType: 'text',
       editable: true,
     },
-
+    {
+      title: 'updatedAt',
+      dataIndex: 'updatedAt',
+      key: 'updatedAt',
+      dataType: 'date',
+      editable: true,
+    },
+    {
+      title: 'createdAt',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      dataType: 'date',
+      editable: true,
+    },
     {
       title: 'operation',
       dataIndex: 'operation',
       key: 'operation',
       dataType: 'operation',
     },
+
   ]
 
   const colsWithProps = columns.map(col => {
@@ -40,7 +55,7 @@ function getColumns(firstRow, edKey, setEdKey, edit, cancel, save) {
       onCell: (record: any) => {
         return {
           record,
-          linkfield: col.linkfield,
+          /*  linkfield: col.linkfield,*/
           dataType: col.dataType,
           dataIndex: col.dataIndex,
           title: col.title,
@@ -58,4 +73,4 @@ function getColumns(firstRow, edKey, setEdKey, edit, cancel, save) {
   return colsWithProps
 }
 
-export default getColumns
+export default getColumnsUsers

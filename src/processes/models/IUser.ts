@@ -8,5 +8,6 @@ export interface IUserFull extends IUser {
   createdAt: Date | string
   updatedAt: Date | string
   deleted: boolean
+  key:number,
 }
 

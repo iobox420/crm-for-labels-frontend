@@ -20,52 +20,50 @@ const VideoclipsTable: React.FC = () => {
       AdminService.getVideoclips({ fk_id_artist_contract: rq.selectedArtistId }),
     )
   }
-
   const postTrack = async (newVideoclip: any) => {
     await AdminService.postVideoclip(newVideoclip)
   }
 
   const mutation = useMutation(postTrack, {
-    onSuccess: () => {
-      // noinspection JSIgnoredPromiseFromCall
-      queryClient.invalidateQueries('admin/get-videoclips')
-    },
+    onSuccess: () => queryClient.invalidateQueries('admin/get-videoclips'),
   })
   const handleAdd = () => {
-
     mutation.mutate({
       fk_id_artist_contract: rq.selectedArtistId,
     })
   }
 
   const { isLoading, error, data } = useVideoclips()
-  const nothing = data?.data.length === 0
-  if (nothing)
-    return (
-      <div>
-        <AddRowButton handle={handleAdd} label={'Add videoclip'} />
-        <NothingData />
-      </div>
-    )
   if (isLoading) return <Loading />
   if (error) return <Error message={error?.response?.data?.message!} />
-  const videoclips = data!.data
-  const columns = Object.keys(videoclips[0]).map(key => {
-    return {
-      title: key,
-      dataIndex: key,
-      key: key,
-    }
-  })
+
+  const notNothing = data?.data.length !== 0
+  if (notNothing) {
+    const videoclips = data!.data
+    const columns = Object.keys(videoclips[0]).map(key => {
+      return {
+        title: key,
+        dataIndex: key,
+        key: key,
+      }
+    })
+
+    return (
+      <div>
+        <Space direction="vertical" size="middle" style={{ display: 'flex', margin: '10px' }}>
+          <Card title={'Videoclips'} size="default">
+            <TableEditable data={videoclips} columns={columns} />
+            <AddRowButton handle={handleAdd} label={'Add videoclip'} />
+          </Card>
+        </Space>
+      </div>
+    )
+  }
 
   return (
     <div>
-      <Space direction="vertical" size="middle" style={{ display: 'flex', margin: '10px' }}>
-        <Card title={'Videoclips'} size="default">
-          <TableEditable data={videoclips} columns={columns} />
-          <AddRowButton handle={handleAdd} label={'Add videoclip'} />
-        </Card>
-      </Space>
+      <AddRowButton handle={handleAdd} label={'Add videoclip'} />
+      <NothingData />
     </div>
   )
 }

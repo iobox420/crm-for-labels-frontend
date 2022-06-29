@@ -51,7 +51,6 @@ export const logout = createAsyncThunk('auth/logout', async (arg: void, { dispat
   }
 })
 
-// noinspection JSUnusedGlobalSymbols
 export const checkAuth = createAsyncThunk('auth/checkAuth', async (arg: void, { dispatch }) => {
   dispatch(setLoading(true))
   try {

@@ -1,9 +1,9 @@
 import { Table } from 'antd'
 import React from 'react'
+import { AxiosRequestConfig, AxiosResponseHeaders } from "axios";
 
-// @ts-ignore
-const TableEditable = ({ data, columns }) => {
-  // @ts-ignore
+
+function TableEditable({ data, columns }) {
   const dataWithKey = data.map((row, i) => {
     return {
       key: i,

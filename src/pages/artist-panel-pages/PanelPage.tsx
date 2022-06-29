@@ -78,7 +78,6 @@ const PanelPage = () => {
 
 
   const [current, setCurrent] = useState('mail')
-  // noinspection JSUnusedLocalSymbols
   let url = useLocation().pathname
   let navigate = useNavigate()
   const onClick: MenuProps['onClick'] = e => {

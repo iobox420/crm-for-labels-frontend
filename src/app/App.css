@@ -24,9 +24,9 @@
 .fdcolumn {
   flex-direction: column; }
 
-/*.fdrow {
-  flex-direction: row;
-}*/
+.fdrow {
+  flex-direction: row; }
+
 .hvh100 {
   height: 100vh; }
 

@@ -11,10 +11,23 @@ import { IRelease } from '@/processes/models/IRelease'
 import { ITrack } from '@/processes/models/ITrack'
 import { IVideoclip } from '@/processes/models/IVideoclip'
 import { IFkArtistContract } from '@/processes/models/response/IFkArtistContract'
+import moment from "moment";
 
 export default class AdminService {
-  static async getArtists(props: PageLimit) {
-    return $api.post<AxiosResponse<getResCountRows<IArtist[]>>>('/admin/get-artists', props)
+  static async getArtists(props: PageLimit): Promise<getResCountRows<IArtist>> {
+    const artists =  await $api.get('/admin/get-artists', { params: props })
+    const rows = artists?.data.rows.map((artist:IArtist, i:number) => {
+      return {
+        ...artist,
+        contract_agreement:moment(artist.contract_agreement),
+        contract_expiration_date:moment(artist.contract_expiration_date),
+        key:i,
+      }
+    })
+    return {
+      rows:rows,
+      count:artists.data.count
+    }
   }
 
   static async updateArtist(artist: IArtist): Promise<AxiosResponse<AuthResponse>> {
@@ -27,8 +40,20 @@ export default class AdminService {
 
   static async getUsers(
     props: PageLimit,
-  ): Promise<AxiosResponse<getResCountRows<IUserFull>, PageLimit>> {
-    return $api.post<getResCountRows<IUserFull>>('/admin/get-users', props)
+  ): Promise<getResCountRows<IUserFull>> {
+    const data = await $api.get('/admin/get-users', { params: props })
+    const rows = data?.data.rows.map((user:IUserFull, i:number) => {
+      return {
+        ...user,
+        createdAt:moment(user.createdAt),
+        updatedAt:moment(user.updatedAt),
+        key:i,
+      }
+    })
+    return {
+      rows:rows,
+      count:data.data.count
+    }
   }
 
   static async updateUser(user: IUserFull): Promise<AxiosResponse<AuthResponse>> {

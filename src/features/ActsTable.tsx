@@ -26,45 +26,44 @@ const ActsTable: React.FC = () => {
   }
 
   const mutation = useMutation(postAct, {
-    onSuccess: () => {
-      // noinspection JSIgnoredPromiseFromCall
-      queryClient.invalidateQueries('admin/get-acts')
-    },
+    onSuccess: () => queryClient.invalidateQueries('admin/get-acts'),
   })
   const handleAdd = () => {
-
     mutation.mutate({
       fk_id_artist_contract: rq.selectedArtistId,
     })
   }
 
   const { isLoading, error, data } = useActs()
-  const nothing = data?.data.length === 0
-  if (nothing)
-    return (
-      <div>
-        <AddRowButton handle={handleAdd} label={'Add act'} />
-        <NothingData />
-      </div>
-    )
   if (isLoading) return <Loading />
   if (error) return <Error message={error?.response?.data?.message!} />
-  const acts = data!.data
-  const columns = Object.keys(acts[0]).map(key => {
-    return {
-      title: key,
-      dataIndex: key,
-      key: key,
-    }
-  })
+
+  const notNothing = data?.data.length !== 0
+  if (notNothing) {
+    const acts = data!.data
+    const columns = Object.keys(acts[0]).map(key => {
+      return {
+        title: key,
+        dataIndex: key,
+        key: key,
+      }
+    })
+    return (
+      <div>
+        <Space direction="vertical" size="middle" style={{ display: 'flex', margin: '10px' }}>
+          <Card title={'Acts'} size="default">
+            <TableEditable data={acts} columns={columns} />
+            <AddRowButton handle={handleAdd} label={'Add act'} />
+          </Card>
+        </Space>
+      </div>
+    )
+  }
+
   return (
     <div>
-      <Space direction="vertical" size="middle" style={{ display: 'flex', margin: '10px' }}>
-        <Card title={'Acts'} size="default">
-          <TableEditable data={acts} columns={columns} />
-          <AddRowButton handle={handleAdd} label={'Add act'} />
-        </Card>
-      </Space>
+      <AddRowButton handle={handleAdd} label={'Add act'} />
+      <NothingData />
     </div>
   )
 }
