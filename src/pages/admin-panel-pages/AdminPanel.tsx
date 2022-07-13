@@ -23,6 +23,10 @@ const items: MenuProps['items'] = [
             label: 'All users',
             key: 'key-all-users',
           },
+          {
+            label: 'All tracks',
+            key: 'key-all-tracks',
+          },
 
         ],
       },
@@ -50,6 +54,9 @@ const AdminPanel = () => {
         break
       case 'key-all-users':
         navigate('users')
+        break
+      case 'key-all-tracks':
+        navigate('tracks')
         break
       case 'key-exit':
         dispatch(logout())

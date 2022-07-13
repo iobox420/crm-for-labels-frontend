@@ -9,19 +9,13 @@ export interface ITableEditable<D, C=any>  {
 
 function TableEditablev <ITableEditable> ({ data, columns, count, setPage, pageSize }) {
 
-  const dataWithKey = data.map((row, i) => {
-    return {
-      key: i,
-      ...row,
-    }
-  })
   return (
     <div>
       <Table components={{
         body: {
           cell: EditableCell,
         },
-      }} dataSource={dataWithKey}  columns={columns} pagination={{
+      }} dataSource={data}  columns={columns} pagination={{
         pageSize: pageSize,
         total: count,
         onChange: page => {

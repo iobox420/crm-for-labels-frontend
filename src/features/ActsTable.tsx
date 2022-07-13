@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import TableEditable from './TableEditable'
-import { Card, Space } from 'antd'
+import { Card, Form, Space } from 'antd'
 import { IAct } from '@/processes/models/IAct'
 import { useMutation, useQuery } from 'react-query'
 import AdminService from '@/processes/services/AdminService'
@@ -12,48 +12,92 @@ import Error from '@/widgets/Error'
 import { queryClient } from '@/app/main'
 import NothingData from '@/widgets/NothingData'
 import AddRowButton from '@/shared/AddRowButton'
+import TableEditablev from '@/shared/TableEditable'
+import getColumnsActs from '@/features/getColumnsActs'
 
 const ActsTable: React.FC = () => {
   const rq = useAppSelector(({ rq }) => rq)
+  const pageSize = 10
+  const [edKey, setEdKey] = useState(null)
+  const [page, setPage] = useState(1)
+
   const useActs = () => {
-    return useQuery<AxiosResponse<IAct[]>, AxiosError<IError>>('admin/get-acts', () =>
-      AdminService.getActs({ fk_id_artist_contract: rq.selectedArtistId }),
+    // @ts-ignore
+    return useQuery(['admin/get-acts', page], () =>
+      AdminService.getActs({
+        page: page,
+        limit: pageSize,
+        fk_id_artist_contract: rq.selectedArtistId,
+      }),
     )
   }
 
-  const postAct = async (newAct: any) => {
-    await AdminService.postAct(newAct)
-  }
-
-  const mutation = useMutation(postAct, {
+  const mutation = useMutation(AdminService.act, {
     onSuccess: () => queryClient.invalidateQueries('admin/get-acts'),
   })
-  const handleAdd = () => {
-    mutation.mutate({
-      fk_id_artist_contract: rq.selectedArtistId,
+
+  const [form] = Form.useForm()
+
+  function edit(record: any) {
+    setEdKey(record.key)
+    form.setFieldsValue({
+      ...record,
     })
   }
 
-  const { isLoading, error, data } = useActs()
-  if (isLoading) return <Loading />
+  function cancel() {
+    setEdKey(null)
+  }
+
+  async function save() {
+    const act = await form.validateFields()
+    console.log(act);
+    mutation.mutate({
+      type: 'put',
+      payload: act,
+    })
+    setEdKey(null)
+  }
+  async function deletef(){
+    const act = await form.validateFields()
+    console.log(act);
+    mutation.mutate({
+      type: 'delete',
+      payload: act,
+    })
+    setEdKey(null)
+  }
+
+  const handleAdd = () => {
+    mutation.mutate({
+      type: 'post',
+      payload: {
+        fk_id_artist_contract: rq.selectedArtistId,
+      },
+    })
+  }
+
+  const { isLoading, isIdle, error, data } = useActs()
+  if (isLoading || isIdle) return <Loading />
   if (error) return <Error message={error?.response?.data?.message!} />
 
-  const notNothing = data?.data.length !== 0
-  if (notNothing) {
-    const acts = data!.data
-    const columns = Object.keys(acts[0]).map(key => {
-      return {
-        title: key,
-        dataIndex: key,
-        key: key,
-      }
-    })
+  if (data && data.count) {
+    const columns = getColumnsActs(edKey, edit, cancel, save,deletef)
+
     return (
       <div>
         <Space direction="vertical" size="middle" style={{ display: 'flex', margin: '10px' }}>
           <Card title={'Acts'} size="default">
-            <TableEditable data={acts} columns={columns} />
-            <AddRowButton handle={handleAdd} label={'Add act'} />
+            <Form form={form} component={false}>
+              <TableEditablev
+                data={data.rows}
+                columns={columns}
+                count={data.count}
+                setPage={setPage}
+                pageSize={pageSize}
+              />
+              <AddRowButton handle={handleAdd} label={'Add act'} />
+            </Form>
           </Card>
         </Space>
       </div>

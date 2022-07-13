@@ -1,4 +1,15 @@
-import { Form, Input, InputNumber, Typography, Popconfirm, DatePicker, Select } from 'antd'
+import {
+  Form,
+  Input,
+  InputNumber,
+  Typography,
+  Popconfirm,
+  DatePicker,
+  Select,
+  Upload,
+  Button,
+} from 'antd'
+import { UploadOutlined } from '@ant-design/icons'
 
 const { Text } = Typography
 import { Link } from 'react-router-dom'
@@ -31,6 +42,7 @@ const EditableCell: React.FC<IEditableCell> = ({
   children,
   dataType,
   save,
+  deletef,
   edit,
   edKey,
   cancel,
@@ -39,6 +51,34 @@ const EditableCell: React.FC<IEditableCell> = ({
   ...restProps
 }) => {
   if (editable) {
+    if (dataType === 'upload')
+      if (editing) {
+        console.log('render upload');
+        return (
+          <td {...restProps}>
+            <Form.Item
+              name={'upload'}
+              label="upload"
+              valuePropName="fileList"
+              style={{
+                margin: 0,
+              }}
+              getValueFromEvent={e => {
+                console.log('Upload event:', e)
+                if (Array.isArray(e)) {
+                   return e
+                }
+                return e?.fileList
+              }}
+              extra="upload track"
+            >
+              <Upload maxCount={1} name="logo" listType="picture">
+                <Button icon={<UploadOutlined />}>Click to upload</Button>
+              </Upload>
+            </Form.Item>
+          </td>
+        )
+      }
     if (dataType === 'text') {
       if (editing) {
         return (
@@ -50,7 +90,7 @@ const EditableCell: React.FC<IEditableCell> = ({
               }}
               rules={[
                 {
-                  required: true,
+                  required: false,
                   message: `Please Input ${title}!`,
                 },
               ]}
@@ -163,7 +203,6 @@ const EditableCell: React.FC<IEditableCell> = ({
     )
   }
   if (dataType === 'link') {
-    debugger
     return (
       <td {...restProps}>
         <Link to={`/users/${record[linkfield]}`}>to artist page</Link>
@@ -183,6 +222,16 @@ const EditableCell: React.FC<IEditableCell> = ({
             >
               Save
             </Typography.Link>
+            <br />
+            <Typography.Link
+              disabled={false}
+              onClick={() => {
+                deletef(record)
+              }}
+            >
+              Delete
+            </Typography.Link>
+            <br />
             <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
               <a>Cancel</a>
             </Popconfirm>
@@ -202,6 +251,21 @@ const EditableCell: React.FC<IEditableCell> = ({
       )
     }
   }
+  if (dataType === 'date')
+    return (
+      <td {...restProps}>
+        <Form.Item
+          name={dataIndex}
+          rules={[{ required: false }]}
+          style={{
+            margin: 0,
+          }}
+        >
+          <Text>{record[dataIndex].format('DD.MM.YYYY')}</Text>
+        </Form.Item>
+      </td>
+    )
+
   return (
     <td {...restProps}>
       <Form.Item

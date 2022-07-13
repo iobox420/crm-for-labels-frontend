@@ -1,5 +1,4 @@
 import React from 'react'
-import { IUserFull } from "@/processes/models/IUser";
 import { IArtist } from "@/processes/models/IArtist";
 
 function getColumnsArtists(edKey:number | null, edit:unknown, cancel:unknown, save:unknown) {
