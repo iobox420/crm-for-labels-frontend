@@ -15,11 +15,6 @@ import AddRowButton from '@/shared/AddRowButton'
 
 const AlbumsTable: React.FC = () => {
   const rq = useAppSelector(({ rq }) => rq)
-  const useAlbums = () => {
-    return useQuery<AxiosResponse<IAlbum[]>, AxiosError<IError>>('admin/get-albums', () =>
-      AdminService.getAlbums({ fk_id_artist_contract: rq.selectedArtistId }),
-    )
-  }
 
   const postTrack = async (newAlbum: any) => {
     await AdminService.postAlbum(newAlbum)
@@ -34,9 +29,11 @@ const AlbumsTable: React.FC = () => {
     })
   }
 
-  const { isLoading, error, data } = useAlbums()
+  const { isLoading, error, data } = useQuery('admin/get-albums', () =>
+    AdminService.getAlbums({ fk_id_artist_contract: rq.selectedArtistId }),
+  )
   if (isLoading) return <Loading />
-  if (error) return <Error message={error?.response?.data?.message!} />
+  if (error) return <Error  />
 
   const notNothing = data?.data.length !== 0
   if (notNothing) {

@@ -7,3 +7,5 @@ dist-ssr
 *.local
 yarn-error.log
 
+vite.config.ts
+src\features\TestForm.tsx

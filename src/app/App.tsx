@@ -1,4 +1,4 @@
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import Login from '../pages/login/Login'
 import Registration from '@/pages/registration/Registration'
@@ -14,9 +14,9 @@ import PanelPage from '../pages/artist-panel-pages/PanelPage'
 import RequireArtist from '../hoc/RequireArtist'
 import AboutPage from '../pages/artist-panel-pages/AboutPage'
 import MyContractPage from '../pages/artist-panel-pages/MyContractPage'
-import Artists from "@/pages/admin-panel-pages/artists/Artists";
-import Users from "@/pages/admin-panel-pages/users/Users";
-import Tracks from "@/pages/admin-panel-pages/tracks/Tracks";
+import Artists from '@/pages/admin-panel-pages/artists/Artists'
+import Users from '@/pages/admin-panel-pages/users/Users'
+import Tracks from '@/pages/admin-panel-pages/tracks/Tracks'
 
 function App() {
   const dispatch = useAppDispatch()
@@ -88,7 +88,7 @@ function App() {
             index
             element={
               <RequireAdmin>
-                <Tracks />
+                <Users />
               </RequireAdmin>
             }
           />

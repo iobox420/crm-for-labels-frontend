@@ -1,28 +1,28 @@
 import {
+  Button,
+  DatePicker,
   Form,
   Input,
   InputNumber,
-  Typography,
   Popconfirm,
-  DatePicker,
   Select,
-  Upload,
-  Button,
   Tag,
+  Typography,
+  Upload,
 } from 'antd'
-import { UploadOutlined, CheckCircleOutlined  } from '@ant-design/icons'
+import { CheckCircleOutlined, UploadOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
+import React from 'react'
 
 const { Text } = Typography
-import { Link } from 'react-router-dom'
 
 const { Option } = Select
-import React from 'react'
 
 export type TRecord = any
 
 export interface IEditableCell {
   editing: boolean
-  dataIndex: number
+  dataIndex: string
   title: string
   record: TRecord
   children: React.ReactNode
@@ -30,6 +30,7 @@ export interface IEditableCell {
   edKey: null | number
   save: (recordKey: number) => void
   edit: (record: any) => void
+  deletef:(record: any) => void
   cancel: () => void
   editable: boolean
   linkfield: string
@@ -79,7 +80,6 @@ const EditableCell: React.FC<IEditableCell> = ({
           </td>
         )
       }
-      debugger
       if (record[dataIndex] === null) {
         return (
           <td {...restProps}>
@@ -164,8 +164,24 @@ const EditableCell: React.FC<IEditableCell> = ({
           </td>
         )
       }
-
-      return <td {...restProps}>{record[dataIndex].format('DD.MM.YYYY')}</td>
+      return (
+        <td {...restProps}>
+          <Form.Item
+            name={dataIndex}
+            style={{
+              margin: 0,
+            }}
+            rules={[
+              {
+                required: false,
+                message: `Please Input ${title}!`,
+              },
+            ]}
+          >
+            <DatePicker defaultValue={record[dataIndex]} disabled={true} format={'DD.MM.YYYY'} />
+          </Form.Item>
+        </td>
+      )
     }
     if (dataType === 'dropdown-deleted') {
       if (editing) {
@@ -289,20 +305,26 @@ const EditableCell: React.FC<IEditableCell> = ({
       )
     }
   }
-  if (dataType === 'date')
+  if (dataType === 'date') {
     return (
       <td {...restProps}>
         <Form.Item
           name={dataIndex}
-          rules={[{ required: false }]}
           style={{
             margin: 0,
           }}
+          rules={[
+            {
+              required: false,
+              message: `Please Input ${title}!`,
+            },
+          ]}
         >
-          <Text>{record[dataIndex].format('DD.MM.YYYY')}</Text>
+          <DatePicker defaultValue={record[dataIndex]} disabled={true} format={'DD.MM.YYYY'} />
         </Form.Item>
       </td>
     )
+  }
 
   return (
     <td {...restProps}>

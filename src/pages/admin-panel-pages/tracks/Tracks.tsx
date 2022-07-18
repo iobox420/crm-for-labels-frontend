@@ -9,7 +9,6 @@ import { Form, Table } from 'antd'
 import EditableCell from '@/shared/EditableCell'
 import getColumnsTracks from '@/pages/admin-panel-pages/tracks/getColumnsTracks'
 import AddRowButton from '@/shared/AddRowButton'
-import TestForm from "@/features/TestForm";
 
 const Tracks: React.FC = () => {
   const pageSize = 10
@@ -73,14 +72,13 @@ const Tracks: React.FC = () => {
 
   if (isLoading) return <Loading />
 
-  if (error) return <Error message={error?.response?.data?.message!} />
+  if (error) return <Error />
 
   const columns = getColumnsTracks(edKey, edit, cancel, save, deletef)
   if (data) {
     if (data.count !== 0)
       return (
         <div>
-      {/*    <TestForm />*/}
           <Form form={form} component={false}>
             <Table
               components={{

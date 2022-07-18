@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios'
 import { AuthResponse } from '@/processes/models/response/AuthResponse'
 import { IArtist } from '@/processes/models/IArtist'
 import { IUserFull } from '@/processes/models/IUser'
-import { PageLimit } from '@/processes/models/PageLimit'
+import { PageLimit, PageLimitWithIdArtist } from "@/processes/models/PageLimit";
 import { IAct } from '@/processes/models/IAct'
 import { IAlbum } from '@/processes/models/IAlbum'
 import { IRelease } from '@/processes/models/IRelease'
@@ -12,6 +12,7 @@ import { IVideoclip } from '@/processes/models/IVideoclip'
 import { IFkArtistContract } from '@/processes/models/response/IFkArtistContract'
 import moment from 'moment'
 import { IActionCreator } from '../models/IActionCreator'
+import { getResCountRows } from '../models/response/getResCountRows'
 
 function addKey(data: any) {
   const dataWithKey = data.map((row: any, i: any) => {
@@ -23,7 +24,7 @@ function addKey(data: any) {
   return dataWithKey
 }
 
-function castedToTypes(payload) {
+function castedToTypes(payload:any) {
   const resultPayload = { ...payload }
   for (let prop in payload) {
     if (payload[prop] instanceof moment) {
@@ -61,6 +62,8 @@ export default class AdminService {
   static async getUsers(props: PageLimit) {
     const data = await $api.get('/admin/get-users', { params: props })
     const rows = data?.data.rows.map((user: IUserFull, i: number) => {
+   /*   console.log(moment(user.createdAt).format("YYYY-MM-DD"));*/
+
       return {
         ...user,
         createdAt: moment(user.createdAt),
@@ -107,7 +110,7 @@ export default class AdminService {
    */
   static async track(action: IActionCreator<ITrackWithFiles>) {
     if (action.type === 'post') {
-      return $api.post<AxiosResponse>('admin/post-track', action.payload)
+      return $api.post<AxiosResponse>('admin/post-track')
     }
     if (action.type === 'put') {
       const casted = castedToTypes(action.payload)
@@ -184,12 +187,12 @@ export default class AdminService {
   /*
   get routes
   */
-  static async getActs(props) {
-    const data = await $api.get<AxiosResponse<IAct[]>>('/admin/get-acts', {
+  static async getActs(props:PageLimitWithIdArtist) {
+    const data = await $api.get<getResCountRows<IAct[]>>('/admin/get-acts', {
       params: props,
     })
     const rows = addKey(data.data.rows)
-    const rowsCastDateFields = rows.map(act => {
+    const rowsCastDateFields = rows.map((act:IAct )=> {
       return {
         ...act,
         createdAt: moment(act.createdAt),

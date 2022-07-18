@@ -9,7 +9,7 @@ export interface Irq {
 const initialState = {
   selectedArtist: {},
   selectedArtistId:undefined
-}
+} as Irq
 
 const reactQuerySlice = createSlice({
   name: 'rq',

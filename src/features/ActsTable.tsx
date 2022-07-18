@@ -1,19 +1,15 @@
 import React, { useState } from 'react'
-import TableEditable from './TableEditable'
-import { Card, Form, Space } from 'antd'
-import { IAct } from '@/processes/models/IAct'
+import { Card, Form, Space, Table } from 'antd'
 import { useMutation, useQuery } from 'react-query'
 import AdminService from '@/processes/services/AdminService'
 import { useAppSelector } from '@/processes/redux/hooks'
-import { AxiosError, AxiosResponse } from 'axios'
-import IError from '@/processes/models/response/IError'
 import Loading from '@/widgets/Loading'
 import Error from '@/widgets/Error'
 import { queryClient } from '@/app/main'
 import NothingData from '@/widgets/NothingData'
 import AddRowButton from '@/shared/AddRowButton'
-import TableEditablev from '@/shared/TableEditable'
 import getColumnsActs from '@/features/getColumnsActs'
+import EditableCell from '@/shared/EditableCell'
 
 const ActsTable: React.FC = () => {
   const rq = useAppSelector(({ rq }) => rq)
@@ -22,12 +18,11 @@ const ActsTable: React.FC = () => {
   const [page, setPage] = useState(1)
 
   const useActs = () => {
-    // @ts-ignore
     return useQuery(['admin/get-acts', page], () =>
       AdminService.getActs({
         page: page,
         limit: pageSize,
-        fk_id_artist_contract: rq.selectedArtistId,
+        fk_id_artist_contract: rq.selectedArtistId!,
       }),
     )
   }
@@ -51,16 +46,16 @@ const ActsTable: React.FC = () => {
 
   async function save() {
     const act = await form.validateFields()
-    console.log(act);
+    console.log(act)
     mutation.mutate({
       type: 'put',
       payload: act,
     })
     setEdKey(null)
   }
-  async function deletef(){
+  async function deletef() {
     const act = await form.validateFields()
-    console.log(act);
+    console.log(act)
     mutation.mutate({
       type: 'delete',
       payload: act,
@@ -72,29 +67,38 @@ const ActsTable: React.FC = () => {
     mutation.mutate({
       type: 'post',
       payload: {
-        fk_id_artist_contract: rq.selectedArtistId,
+        fk_id_artist_contract: rq.selectedArtistId!,
       },
     })
   }
 
   const { isLoading, isIdle, error, data } = useActs()
   if (isLoading || isIdle) return <Loading />
-  if (error) return <Error message={error?.response?.data?.message!} />
+  if (error) return <Error />
 
   if (data && data.count) {
-    const columns = getColumnsActs(edKey, edit, cancel, save,deletef)
+    const columns = getColumnsActs(edKey, edit, cancel, save, deletef)
 
     return (
       <div>
         <Space direction="vertical" size="middle" style={{ display: 'flex', margin: '10px' }}>
           <Card title={'Acts'} size="default">
             <Form form={form} component={false}>
-              <TableEditablev
-                data={data.rows}
+              <Table
+                components={{
+                  body: {
+                    cell: EditableCell,
+                  },
+                }}
+                dataSource={data.rows}
                 columns={columns}
-                count={data.count}
-                setPage={setPage}
-                pageSize={pageSize}
+                pagination={{
+                  pageSize: pageSize,
+                  total: data.count,
+                  onChange: page => {
+                    setPage(page)
+                  },
+                }}
               />
               <AddRowButton handle={handleAdd} label={'Add act'} />
             </Form>

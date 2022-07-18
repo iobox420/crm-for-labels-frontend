@@ -34,9 +34,11 @@ const ReleasesTable: React.FC = () => {
     })
   }
 
-  const { isLoading, error, data } = useReleases()
+  const { isLoading, error, data } = useQuery('admin/get-releases', () =>
+    AdminService.getReleases({ fk_id_artist_contract: rq.selectedArtistId }),
+  )
   if (isLoading) return <Loading />
-  if (error) return <Error message={error?.response?.data?.message!} />
+  if (error) return <Error />
 
   const notNothing = data?.data.length !== 0
   if (notNothing) {

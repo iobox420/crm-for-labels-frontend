@@ -4,11 +4,10 @@ import AdminService from '@/processes/services/AdminService'
 import { queryClient } from '@/app/main'
 import NothingData from '@/widgets/NothingData'
 import Loading from '@/widgets/Loading'
-import TableEditablev from '@/shared/TableEditable'
-import { Form } from 'antd'
+import { Form, Table } from 'antd'
 import getColumnsUsers from '@/pages/admin-panel-pages/users/getColumnsUsers'
 import Error from '@/widgets/Error'
-import { IUserFull } from "@/processes/models/IUser";
+import EditableCell from '@/shared/EditableCell'
 
 const Users: React.FC = () => {
   const pageSize = 10
@@ -43,17 +42,12 @@ const Users: React.FC = () => {
   }
   const { isLoading, error, data } = useArtists()
   if (isLoading) return <Loading />
-  // Как здесь указать тип ошибки я не могу понять.
-  // TS2339: Property 'response' does not exist on type '{}'.
   if (error) {
     if (error instanceof Error) {
-      return <Error message={error.response?.data?.message!} />
+      return <Error />
     }
   }
-  // TS2571: Object is of type 'unknown'.
- /* if (error) {
-    return <Error message={error.response?.data?.message!} />
-  }*/
+
   const columns = getColumnsUsers(edKey, edit, cancel, save)
 
   if (data) {
@@ -61,17 +55,26 @@ const Users: React.FC = () => {
       return (
         <div>
           <Form form={form} component={false}>
-            <TableEditablev<IUserFull>
-              data={data.rows}
+            <Table
+              components={{
+                body: {
+                  cell: EditableCell,
+                },
+              }}
+              dataSource={data.rows}
               columns={columns}
-              count={data.count}
-              setPage={setPage}
-              pageSize={pageSize}
+              pagination={{
+                pageSize: pageSize,
+                total: data.count,
+                onChange: page => {
+                  setPage(page)
+                },
+              }}
             />
           </Form>
         </div>
       )
-  } 
+  }
 
   return (
     <div>

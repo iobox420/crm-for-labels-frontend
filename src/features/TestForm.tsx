@@ -1,7 +1,9 @@
-import { Form, Rate, Upload, Select, Input } from "antd";
+// тестовый компонент
+// @ts-nocheck
+import { Form, Input, Select, Upload } from 'antd'
 import { Button } from 'antd/lib/radio'
 import React from 'react'
-import { UploadOutlined, InboxOutlined } from '@ant-design/icons'
+import { UploadOutlined } from '@ant-design/icons'
 
 const { Option } = Select
 const formItemLayout = {
@@ -29,6 +31,7 @@ const TestForm = () => {
     const formValues = await form.validateFields()
     console.log(formValues);
   }
+
   const onFinish = values => {
     console.log('Received values of form: ', values)
   }

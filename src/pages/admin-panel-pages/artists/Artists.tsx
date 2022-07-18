@@ -5,9 +5,9 @@ import { queryClient } from '@/app/main'
 import NothingData from '@/widgets/NothingData'
 import Loading from '@/widgets/Loading'
 import Error from '@/widgets/Error'
-import TableEditablev from '@/shared/TableEditable'
 import getColumnsArtists from '@/pages/admin-panel-pages/artists/getColumnsArtists'
-import { Form } from 'antd'
+import { Form, Table } from 'antd'
+import EditableCell from '@/shared/EditableCell'
 
 const Artists: React.FC = () => {
   const pageSize = 10
@@ -44,7 +44,7 @@ const Artists: React.FC = () => {
 
   if (isLoading) return <Loading />
 
-  if (error) return <Error message={error?.response?.data?.message!} />
+  if (error) return <Error />
 
   const columns = getColumnsArtists(edKey, edit, cancel, save)
   if (data) {
@@ -52,12 +52,21 @@ const Artists: React.FC = () => {
       return (
         <div>
           <Form form={form} component={false}>
-            <TableEditablev
-              data={data.rows}
+            <Table
+              components={{
+                body: {
+                  cell: EditableCell,
+                },
+              }}
+              dataSource={data.rows}
               columns={columns}
-              count={data.count}
-              setPage={setPage}
-              pageSize={pageSize}
+              pagination={{
+                pageSize: pageSize,
+                total: data.count,
+                onChange: page => {
+                  setPage(page)
+                },
+              }}
             />
           </Form>
         </div>

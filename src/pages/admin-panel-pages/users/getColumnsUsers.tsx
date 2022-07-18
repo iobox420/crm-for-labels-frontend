@@ -27,6 +27,13 @@ function getColumnsUsers(edKey:number | null, edit:unknown, cancel:unknown, save
       editable: true,
     },
     {
+      title: 'role',
+      dataIndex: 'role',
+      key: 'role',
+      dataType: 'dropdown-role',
+      editable: true,
+    },
+    {
       title: 'updatedAt',
       dataIndex: 'updatedAt',
       key: 'updatedAt',

@@ -23,6 +23,7 @@ export const login = createAsyncThunk(
       dispatch(setAuth(true))
       dispatch(setUser(response.data.user))
     } catch (e: any) {
+      console.log('error login');
       console.log(e.response?.data?.message)
     }
   },

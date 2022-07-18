@@ -4,22 +4,14 @@ import { Card, Space } from 'antd'
 import { useMutation, useQuery } from 'react-query'
 import AdminService from '@/processes/services/AdminService'
 import { useAppSelector } from '@/processes/redux/hooks'
-import { AxiosError, AxiosResponse } from 'axios'
-import IError from '@/processes/models/response/IError'
 import Loading from '@/widgets/Loading'
 import Error from '@/widgets/Error'
 import { queryClient } from '@/app/main'
-import { ITrack } from '@/processes/models/ITrack'
 import NothingData from '@/widgets/NothingData'
 import AddRowButton from '@/shared/AddRowButton'
 
 const TracksTable: React.FC = () => {
   const rq = useAppSelector(({ rq }) => rq)
-  const useTracks = () => {
-    return useQuery<AxiosResponse<ITrack[]>, AxiosError<IError>>('admin/get-tracks', () =>
-      AdminService.getTracks({ fk_id_artist_contract: rq.selectedArtistId }),
-    )
-  }
 
   const postTrack = async (newTrack: any) => {
     await AdminService.postTrack(newTrack)
@@ -33,9 +25,11 @@ const TracksTable: React.FC = () => {
       fk_id_artist_contract: rq.selectedArtistId,
     })
   }
-  const { isLoading, error, data } = useTracks()
+  const { isLoading, error, data } = useQuery('admin/get-tracks', () =>
+    AdminService.getTracks({ fk_id_artist_contract: rq.selectedArtistId }),
+  )
   if (isLoading) return <Loading />
-  if (error) return <Error message={error?.response?.data?.message!} />
+  if (error) return <Error />
   const notNothing = data?.data.length !== 0
   if (notNothing) {
     const tracks = data!.data

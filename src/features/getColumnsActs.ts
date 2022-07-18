@@ -1,5 +1,5 @@
 function getColumnsActs(edKey:number | null, edit:unknown, cancel:unknown, save:unknown, deletef:unknown) {
-  const isEditing = (record) => record.key === edKey
+  const isEditing = (record:any) => record.key === edKey
   const columns = [
 
     {
