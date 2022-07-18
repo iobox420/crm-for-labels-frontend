@@ -8,8 +8,9 @@ import {
   Select,
   Upload,
   Button,
+  Tag,
 } from 'antd'
-import { UploadOutlined } from '@ant-design/icons'
+import { UploadOutlined, CheckCircleOutlined  } from '@ant-design/icons'
 
 const { Text } = Typography
 import { Link } from 'react-router-dom'
@@ -51,26 +52,25 @@ const EditableCell: React.FC<IEditableCell> = ({
   ...restProps
 }) => {
   if (editable) {
-    if (dataType === 'upload')
+    if (dataType === 'upload') {
       if (editing) {
-        console.log('render upload');
         return (
           <td {...restProps}>
             <Form.Item
-              name={'upload'}
-              label="upload"
-              valuePropName="fileList"
+              name={dataIndex}
+              label={dataIndex}
+              valuePropName={dataIndex}
               style={{
                 margin: 0,
               }}
               getValueFromEvent={e => {
                 console.log('Upload event:', e)
                 if (Array.isArray(e)) {
-                   return e
+                  return e
                 }
                 return e?.fileList
               }}
-              extra="upload track"
+              extra="upload"
             >
               <Upload maxCount={1} name="logo" listType="picture">
                 <Button icon={<UploadOutlined />}>Click to upload</Button>
@@ -79,6 +79,26 @@ const EditableCell: React.FC<IEditableCell> = ({
           </td>
         )
       }
+      debugger
+      if (record[dataIndex] === null) {
+        return (
+          <td {...restProps}>
+            <Tag color={'red'} key={record[dataIndex]}>
+              empty
+            </Tag>
+          </td>
+        )
+      } else {
+        return (
+          <td {...restProps}>
+            <Tag icon={<CheckCircleOutlined />} color="success">
+              success
+            </Tag>
+          </td>
+        )
+      }
+    }
+
     if (dataType === 'text') {
       if (editing) {
         return (
@@ -163,6 +183,24 @@ const EditableCell: React.FC<IEditableCell> = ({
                 <Option value="false">false</Option>
               </Select>
             </Form.Item>
+          </td>
+        )
+      }
+      if (record[dataIndex] === 'false') {
+        return (
+          <td {...restProps}>
+            <Tag color={'red'} key={record[dataIndex]}>
+              {record[dataIndex]}
+            </Tag>
+          </td>
+        )
+      }
+      if (record[dataIndex] === 'true') {
+        return (
+          <td {...restProps}>
+            <Tag color={'green'} key={record[dataIndex]}>
+              {record[dataIndex]}
+            </Tag>
           </td>
         )
       }

@@ -7,7 +7,7 @@ import { PageLimit } from '@/processes/models/PageLimit'
 import { IAct } from '@/processes/models/IAct'
 import { IAlbum } from '@/processes/models/IAlbum'
 import { IRelease } from '@/processes/models/IRelease'
-import { ITrack } from '@/processes/models/ITrack'
+import { ITrack, ITrackWithFiles } from "@/processes/models/ITrack";
 import { IVideoclip } from '@/processes/models/IVideoclip'
 import { IFkArtistContract } from '@/processes/models/response/IFkArtistContract'
 import moment from 'moment'
@@ -105,7 +105,7 @@ export default class AdminService {
    post routes
 
    */
-  static async track(action: IActionCreator<ITrack>) {
+  static async track(action: IActionCreator<ITrackWithFiles>) {
     if (action.type === 'post') {
       return $api.post<AxiosResponse>('admin/post-track', action.payload)
     }
@@ -116,10 +116,31 @@ export default class AdminService {
         upload: null,
       }
       let data = new FormData()
-      data.append('record', action.payload.upload[0].originFileObj);
+      console.log(action.payload);
+      if(action.payload.path_to_wav){
+        if(action.payload.path_to_wav[0].originFileObj instanceof File){
+          data.append('path_to_wav', action.payload.path_to_wav[0].originFileObj);
+          console.log('add path_to_wav');
+        }
+      }
+      if(action.payload.path_to_mp3){
+        if(action.payload.path_to_mp3[0].originFileObj instanceof File){
+          data.append('path_to_mp3', action.payload.path_to_mp3[0].originFileObj);
+          console.log('add path_to_mp3');
+        }
+      }
+      if(action.payload.path_to_cover){
+        if(action.payload.path_to_cover[0].originFileObj instanceof File){
+          data.append('path_to_cover', action.payload.path_to_cover[0].originFileObj);
+          console.log('add path_to_cover');
+        }
+      }
+
       for (let prop in track){
         data.append(prop,track[prop])
       }
+      console.log(data);
+      console.log(JSON.stringify(data));
       return $api.put<AxiosResponse>('admin/put-track', data)
     }
     if (action.type === 'delete') {

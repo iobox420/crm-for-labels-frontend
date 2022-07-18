@@ -19,3 +19,9 @@ export interface ITrack {
   createdAt: string
   updatedAt: string
 }
+
+export interface ITrackWithFiles extends ITrack {
+  path_to_mp3: any
+  path_to_wav: any
+  path_to_cover: any
+}

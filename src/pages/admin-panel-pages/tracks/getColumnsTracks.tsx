@@ -11,14 +11,7 @@ function getColumnsTracks(
   const isEditing = (record: IArtist) => record.key === edKey
 
   const columns = [
-    {
-      title: 'record_path',
-      dataIndex: 'record_path',
-      key: 'record_path',
-      dataType: 'upload',
-      linkfield: 'id_artist_contract',
-      editable: true,
-    },
+
     {
       title: 'id_track',
       dataIndex: 'id_track',
@@ -26,7 +19,7 @@ function getColumnsTracks(
       dataType: 'text',
       editable: false,
     },
-    {
+/*    {
       title: 'fk_id_album',
       dataIndex: 'fk_id_album',
       key: 'fk_id_album',
@@ -60,7 +53,7 @@ function getColumnsTracks(
       key: 'fk_id_artist_contract',
       dataType: 'text',
       editable: true,
-    },
+    },*/
     {
       title: 'id_for_dmg',
       dataIndex: 'id_for_dmg',
@@ -187,7 +180,30 @@ function getColumnsTracks(
       dataType: 'date',
       editable: false,
     },
-
+    {
+      title: 'path_to_mp3',
+      dataIndex: 'path_to_mp3',
+      key: 'path_to_mp3',
+      dataType: 'upload',
+      linkfield: 'id_artist_contract',
+      editable: true,
+    },
+    {
+      title: 'path_to_wav',
+      dataIndex: 'path_to_wav',
+      key: 'path_to_wav',
+      dataType: 'upload',
+      linkfield: 'id_artist_contract',
+      editable: true,
+    },
+    {
+      title: 'path_to_cover',
+      dataIndex: 'path_to_cover',
+      key: 'path_to_cover',
+      dataType: 'upload',
+      linkfield: 'id_artist_contract',
+      editable: true,
+    },
     {
       title: 'operation',
       dataIndex: 'operation',
