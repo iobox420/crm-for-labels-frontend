@@ -20,7 +20,7 @@ const ActsTable: React.FC = () => {
 
   const useActs = () => {
     return useQuery(['get-acts', page], () =>
-      AdminService.getActs({
+      ActService.getActs({
         page: page,
         limit: pageSize,
         fk_id_artist_contract: rq.selectedArtistId!,

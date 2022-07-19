@@ -16,7 +16,7 @@ import AboutPage from '../pages/artist-panel-pages/AboutPage'
 import MyContractPage from '../pages/artist-panel-pages/MyContractPage'
 import Artists from '@/pages/admin-panel-pages/artists/Artists'
 import Users from '@/pages/admin-panel-pages/users/Users'
-import Tracks from '@/pages/admin-panel-pages/tracks/Tracks'
+
 
 function App() {
   const dispatch = useAppDispatch()
@@ -100,14 +100,7 @@ function App() {
               </RequireAdmin>
             }
           />
-          <Route
-            path="tracks"
-            element={
-              <RequireAdmin>
-                <Tracks />
-              </RequireAdmin>
-            }
-          />
+
           <Route
             path="users"
             element={

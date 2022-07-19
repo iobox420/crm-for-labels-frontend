@@ -10,11 +10,7 @@ import { ICurrentArtist } from '@/processes/models/response/ICurrentArtist'
 import About from '@/features/About'
 import { IArtist } from '@/processes/models/IArtist'
 import MyContract from '@/features/MyContract'
-import TracksTable from '@/features/TracksTable'
 import ActsTable from '@/features/ActsTable'
-import AlbumsTable from '@/features/AlbumsTable'
-import ReleasesTable from '@/features/ReleasesTable'
-import VideoclipsTable from '@/features/VideoclipsTable'
 import { useAppDispatch } from '@/processes/redux/hooks'
 import { setSelectedArtist, setSelectedArtistId } from '@/processes/redux/reactQuerySlice'
 
@@ -38,12 +34,7 @@ const CurrentArtist: React.FC = () => {
     <div>
       <About artist={data?.data as IArtist} />
       <MyContract artist={data?.data as IArtist} />
-      {/*   <MyForm />*/}
       <ActsTable />
-      <ReleasesTable />
-      <AlbumsTable />
-      <TracksTable />
-      <VideoclipsTable />
     </div>
   )
 }
