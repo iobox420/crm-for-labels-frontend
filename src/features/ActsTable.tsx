@@ -10,6 +10,7 @@ import NothingData from '@/widgets/NothingData'
 import AddRowButton from '@/shared/AddRowButton'
 import getColumnsActs from '@/features/getColumnsActs'
 import EditableCell from '@/shared/EditableCell'
+import ActService from '@/processes/services/ActService'
 
 const ActsTable: React.FC = () => {
   const rq = useAppSelector(({ rq }) => rq)
@@ -27,9 +28,16 @@ const ActsTable: React.FC = () => {
     )
   }
 
-  const mutation = useMutation(AdminService.act, {
-    onSuccess: () => queryClient.invalidateQueries('admin/get-acts'),
+  const putActMut = useMutation(ActService.putAct,{
+    onSuccess: () => queryClient.invalidateQueries('admin/get-acts')
   })
+  const postActMut = useMutation(ActService.postAct,{
+    onSuccess: () => queryClient.invalidateQueries('admin/get-acts')
+  })
+  const deleteActMut = useMutation(ActService.deletAct,{
+    onSuccess: () => queryClient.invalidateQueries('admin/get-acts')
+  })
+
 
   const [form] = Form.useForm()
 
@@ -47,28 +55,19 @@ const ActsTable: React.FC = () => {
   async function save() {
     const act = await form.validateFields()
     console.log(act)
-    mutation.mutate({
-      type: 'put',
-      payload: act,
-    })
+    putActMut.mutate(act)
     setEdKey(null)
   }
   async function deletef() {
     const act = await form.validateFields()
     console.log(act)
-    mutation.mutate({
-      type: 'delete',
-      payload: act,
-    })
+    deleteActMut.mutate(act)
     setEdKey(null)
   }
 
   const handleAdd = () => {
-    mutation.mutate({
-      type: 'post',
-      payload: {
-        fk_id_artist_contract: rq.selectedArtistId!,
-      },
+    postActMut.mutate({
+      fk_id_artist_contract: rq.selectedArtistId!,
     })
   }
 

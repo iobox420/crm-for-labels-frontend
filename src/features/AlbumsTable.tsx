@@ -1,15 +1,12 @@
 import React from 'react'
 import TableEditable from './TableEditable'
-import { Card, Space } from 'antd'
+import { Card, Space, Table } from "antd";
 import { useMutation, useQuery } from 'react-query'
 import AdminService from '@/processes/services/AdminService'
 import { useAppSelector } from '@/processes/redux/hooks'
-import { AxiosError, AxiosResponse } from 'axios'
-import IError from '@/processes/models/response/IError'
 import Loading from '@/widgets/Loading'
 import Error from '@/widgets/Error'
 import { queryClient } from '@/app/main'
-import { IAlbum } from '@/processes/models/IAlbum'
 import NothingData from '@/widgets/NothingData'
 import AddRowButton from '@/shared/AddRowButton'
 
@@ -33,7 +30,7 @@ const AlbumsTable: React.FC = () => {
     AdminService.getAlbums({ fk_id_artist_contract: rq.selectedArtistId }),
   )
   if (isLoading) return <Loading />
-  if (error) return <Error  />
+  if (error) return <Error />
 
   const notNothing = data?.data.length !== 0
   if (notNothing) {
@@ -49,7 +46,9 @@ const AlbumsTable: React.FC = () => {
       <div>
         <Space direction="vertical" size="middle" style={{ display: 'flex', margin: '10px' }}>
           <Card title={'Albums'} size="default">
-            <TableEditable data={albums} columns={columns} />
+            <Table dataSource={albums} columns={columns} pagination={{
+              pageSize: 10,
+            }} />
             <AddRowButton handle={handleAdd} label={'Add album'} />
           </Card>
         </Space>
