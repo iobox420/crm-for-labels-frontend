@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import vitePluginImp from 'vite-plugin-imp'
 import path from 'path'
 
-// https://vitejs.dev/config/
+// https://vitejs.dev/config/1
 
 export default defineConfig({
   plugins: [
