@@ -144,44 +144,44 @@ export default class AdminService {
       }
       console.log(data);
       console.log(JSON.stringify(data));
-      return $api.put<AxiosResponse>('admin/put-track', data)
+      return $api.put('admin/put-track', data)
     }
     if (action.type === 'delete') {
       const casted = castedToTypes(action.payload)
       console.log(casted)
-      return $api.delete<AxiosResponse>('admin/delete-track', { data: casted })
+      return $api.delete('admin/delete-track', { data: casted })
     }
   }
 
   static async act(action: IActionCreator<IAct>) {
     if (action.type === 'post') {
-      return $api.post<AxiosResponse>('admin/post-act', action.payload)
+      return $api.post('admin/post-act', action.payload)
     }
     if (action.type === 'put') {
       const casted = castedToTypes(action.payload)
-      return $api.put<AxiosResponse>('admin/put-act', casted)
+      return $api.put('admin/put-act', casted)
     }
     if (action.type === 'delete') {
       const casted = castedToTypes(action.payload)
       console.log(casted)
-      return $api.delete<AxiosResponse>('admin/delete-act', { data: casted })
+      return $api.delete('admin/delete-act', { data: casted })
     }
   }
 
   static async postTrack(track: ITrack) {
-    return $api.post<AxiosResponse>('admin/post-track', track)
+    return $api.post('admin/post-track', track)
   }
 
   static async postAlbum(album: IAlbum) {
-    return $api.post<AxiosResponse>('admin/post-album', album)
+    return $api.post('admin/post-album', album)
   }
 
   static async postRelease(release: IRelease) {
-    return $api.post<AxiosResponse>('admin/post-release', release)
+    return $api.post('admin/post-release', release)
   }
 
   static async postVideoclip(videoclip: IVideoclip) {
-    return $api.post<AxiosResponse>('admin/post-videoclip', videoclip)
+    return $api.post('admin/post-videoclip', videoclip)
   }
 
   /*
@@ -204,18 +204,18 @@ export default class AdminService {
   }
 
   static async getAlbums(prop: IFkArtistContract) {
-    return $api.post<AxiosResponse<IAlbum[]>>('/admin/get-albums', prop)
+    return $api.post<IAlbum[]>('/admin/get-albums', prop)
   }
 
   static async getReleases(prop: IFkArtistContract) {
-    return $api.post<AxiosResponse<IRelease[]>>('/admin/get-releases', prop)
+    return $api.post<IRelease[]>('/admin/get-releases', prop)
   }
 
   static async getTracks(prop: IFkArtistContract) {
-    return $api.post<AxiosResponse<ITrack[]>>('/admin/get-tracks', prop)
+    return $api.post<ITrack[]>('/admin/get-tracks', prop)
   }
 
   static async getVideoclips(prop: IFkArtistContract) {
-    return $api.post<AxiosResponse<IVideoclip[]>>('/admin/get-videoclips', prop)
+    return $api.post<IVideoclip[]>('/admin/get-videoclips', prop)
   }
 }

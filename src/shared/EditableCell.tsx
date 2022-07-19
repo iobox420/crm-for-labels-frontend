@@ -30,7 +30,7 @@ export interface IEditableCell {
   edKey: null | number
   save: (recordKey: number) => void
   edit: (record: any) => void
-  deletef:(record: any) => void
+  deletef: (record: any) => void
   cancel: () => void
   editable: boolean
   linkfield: string
@@ -166,20 +166,7 @@ const EditableCell: React.FC<IEditableCell> = ({
       }
       return (
         <td {...restProps}>
-          <Form.Item
-            name={dataIndex}
-            style={{
-              margin: 0,
-            }}
-            rules={[
-              {
-                required: false,
-                message: `Please Input ${title}!`,
-              },
-            ]}
-          >
-            <DatePicker defaultValue={record[dataIndex]} disabled={true} format={'DD.MM.YYYY'} />
-          </Form.Item>
+          <DatePicker defaultValue={record[dataIndex]} disabled={true} format={'DD.MM.YYYY'} />
         </td>
       )
     }
@@ -259,7 +246,7 @@ const EditableCell: React.FC<IEditableCell> = ({
   if (dataType === 'link') {
     return (
       <td {...restProps}>
-        <Link to={`/users/${record[linkfield]}`}>to artist page</Link>
+        <Link to={`${record[linkfield]}`}>to artist page</Link>
       </td>
     )
   }
@@ -277,18 +264,25 @@ const EditableCell: React.FC<IEditableCell> = ({
               Save
             </Typography.Link>
             <br />
-            <Typography.Link
-              disabled={false}
-              onClick={() => {
+
+            <Popconfirm
+              title="Sure to delete?"
+              onConfirm={() => {
                 deletef(record)
               }}
             >
-              Delete
-            </Typography.Link>
-            <br />
-            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-              <a>Cancel</a>
+              <a>Delete</a>
             </Popconfirm>
+            <br />
+            <Typography.Link
+              onClick={cancel}
+              style={{
+                marginRight: 8,
+              }}
+            >
+              Cancel
+            </Typography.Link>
+
           </span>
         </td>
       ) : (
@@ -308,20 +302,7 @@ const EditableCell: React.FC<IEditableCell> = ({
   if (dataType === 'date') {
     return (
       <td {...restProps}>
-        <Form.Item
-          name={dataIndex}
-          style={{
-            margin: 0,
-          }}
-          rules={[
-            {
-              required: false,
-              message: `Please Input ${title}!`,
-            },
-          ]}
-        >
-          <DatePicker defaultValue={record[dataIndex]} disabled={true} format={'DD.MM.YYYY'} />
-        </Form.Item>
+        <DatePicker defaultValue={record[dataIndex]} disabled={true} format={'DD.MM.YYYY'} />
       </td>
     )
   }
