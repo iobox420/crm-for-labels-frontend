@@ -1,6 +1,5 @@
 import React from 'react'
-import TableEditable from './TableEditable'
-import { Card, Space } from 'antd'
+import { Card, Space, Table } from 'antd'
 import { useMutation, useQuery } from 'react-query'
 import AdminService from '@/processes/services/AdminService'
 import { useAppSelector } from '@/processes/redux/hooks'
@@ -45,7 +44,13 @@ const TracksTable: React.FC = () => {
       <div>
         <Space direction="vertical" size="middle" style={{ display: 'flex', margin: '10px' }}>
           <Card title={'Tracks'} size="default">
-            <TableEditable data={tracks} columns={columns} />
+            <Table
+              dataSource={tracks}
+              columns={columns}
+              pagination={{
+                pageSize: 10,
+              }}
+            />
             <AddRowButton handle={handleAdd} label={'Add track'} />
           </Card>
         </Space>
