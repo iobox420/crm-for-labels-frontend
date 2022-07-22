@@ -1,12 +1,9 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
-import { AxiosError, AxiosResponse } from 'axios'
-import IError from '@/processes/models/response/IError'
-import AdminService from '@/processes/services/AdminService'
+import { getAboutArtist } from '@/processes/services/AdminService'
 import Loading from '@/widgets/Loading'
 import Error from '@/widgets/Error'
-import { ICurrentArtist } from '@/processes/models/response/ICurrentArtist'
 import About from '@/features/About'
 import { IArtist } from '@/processes/models/IArtist'
 import MyContract from '@/features/MyContract'
@@ -18,16 +15,12 @@ const CurrentArtist: React.FC = () => {
   const { id } = useParams()
   const dispatch = useAppDispatch()
   dispatch(setSelectedArtistId(id))
-  const useAboutArtist = () => {
-    return useQuery<AxiosResponse<ICurrentArtist>, AxiosError<IError>>(
-      'admin/get-about-artist',
-      () => AdminService.getAboutArtist({ id_artist_contract: id }),
-    )
-  }
 
-  const { isLoading, error, data } = useAboutArtist()
+  const { isLoading, error, data } = useQuery('admin/get-about-artist', () =>
+    getAboutArtist({ id_artist_contract: id }),
+  )
   if (isLoading) return <Loading />
-  if (error) return <Error message={error?.response?.data?.message!} />
+  if (error) return <Error />
   dispatch(setSelectedArtist(data?.data))
 
   return (

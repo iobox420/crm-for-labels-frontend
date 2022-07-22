@@ -1,14 +1,14 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import authSlice, { IAuth } from '@/processes/redux/authSlice'
-import reactQuerySlice, { Irq } from "./reactQuerySlice";
+import reactQuerySlice, { ISelectedArtistsSlice } from './reactQuerySlice'
 
 export interface IRoot {
-  reactQuerySlice:Irq,
+  reactQuerySlice: ISelectedArtistsSlice
   auth: IAuth
 }
 
 const rootReducers = combineReducers({
-  rq:reactQuerySlice,
+  rq: reactQuerySlice,
   auth: authSlice,
 })
 

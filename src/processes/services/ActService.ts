@@ -9,33 +9,33 @@ interface IIdArtist {
   fk_id_artist_contract: string | number
 }
 
-class ActService {
-  static async getActs(props:PageLimitWithIdArtist) {
-    const data = await $api.get('/admin/get-acts', {
-      params: props,
-    })
-    const rows = addKey(data.data.rows)
-    const rowsCastDateFields = rows.map((act:IAct )=> {
-      return {
-        ...act,
-        createdAt: moment(act.createdAt),
-        updatedAt: moment(act.updatedAt),
-      }
-    })
-    const result = { count: data.data.count, rows: rowsCastDateFields }
-    return result
-  }
-  static async postAct(id:IIdArtist) {
-    return $api.post('admin/post-act', id)
-  }
-  static async putAct(payload: IAct) {
-    const casted = castedToTypes(payload)
-    return $api.put('admin/put-act', casted)
-  }
-  static async deletAct(act: IAct) {
-    const casted = castedToTypes(act)
-    console.log(casted)
-    return $api.delete('admin/delete-act', { data: casted })
-  }
+export async function getActs(props: PageLimitWithIdArtist) {
+  const data = await $api.get('/admin/get-acts', {
+    params: props,
+  })
+  const rows = addKey(data.data.rows)
+  const rowsCastDateFields = rows.map((act: IAct) => {
+    return {
+      ...act,
+      createdAt: moment(act.createdAt),
+      updatedAt: moment(act.updatedAt),
+    }
+  })
+  const result = { count: data.data.count, rows: rowsCastDateFields }
+  return result
 }
-export default ActService
+
+export async function createAct(id: IIdArtist) {
+  return $api.post('admin/post-act', id)
+}
+
+export async function updateAct(payload: IAct) {
+  const casted = castedToTypes(payload)
+  return $api.put('admin/put-act', casted)
+}
+
+export async function deleteAct(act: IAct) {
+  const casted = castedToTypes(act)
+
+  return $api.delete('admin/delete-act', { data: casted })
+}

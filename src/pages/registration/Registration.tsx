@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '@/processes/redux/hooks'
 
-
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -55,13 +54,10 @@ const Registration = () => {
       signup({
         email: values.email,
         password: values.password,
-        isArtist:values.isArtist,
+        isArtist: values.isArtist,
       }),
     )
   }
-
-
-
 
   return (
     <div className={'reg-page'}>
@@ -73,7 +69,7 @@ const Registration = () => {
         initialValues={{
           residence: ['zhejiang', 'hangzhou', 'xihu'],
           prefix: '86',
-          isArtist:true
+          isArtist: true,
         }}
         scrollToFirstError
       >
@@ -131,8 +127,8 @@ const Registration = () => {
         >
           <Input.Password />
         </Form.Item>
-        <Form.Item name="isArtist" valuePropName="checked" >
-          <Checkbox  >I am artist</Checkbox>
+        <Form.Item name="isArtist" valuePropName="checked">
+          <Checkbox>I am artist</Checkbox>
         </Form.Item>
 
         <Form.Item {...tailFormItemLayout}>

@@ -65,7 +65,6 @@ const EditableCell: React.FC<IEditableCell> = ({
                 margin: 0,
               }}
               getValueFromEvent={e => {
-                console.log('Upload event:', e)
                 if (Array.isArray(e)) {
                   return e
                 }
@@ -282,7 +281,6 @@ const EditableCell: React.FC<IEditableCell> = ({
             >
               Cancel
             </Typography.Link>
-       
           </span>
         </td>
       ) : (

@@ -1,8 +1,8 @@
 import { IUserFull } from '@/processes/models/IUser'
 import React from 'react'
 
-function getColumnsUsers(edKey:number | null, edit:unknown, cancel:unknown, save:unknown) {
-  const isEditing = (record:IUserFull) => record.key === edKey
+function getColumnsUsers(edKey: number | null, edit: unknown, cancel: unknown, save: unknown) {
+  const isEditing = (record: IUserFull) => record.key === edKey
 
   const columns = [
     /*{
@@ -53,7 +53,6 @@ function getColumnsUsers(edKey:number | null, edit:unknown, cancel:unknown, save
       key: 'operation',
       dataType: 'operation',
     },
-
   ]
 
   const colsWithProps = columns.map(col => {

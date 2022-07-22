@@ -1,11 +1,11 @@
 import React from 'react'
 import { Button } from 'antd'
 interface IAddRowButton {
-  handle:any,
-  label:string
+  handle: any
+  label: string
 }
 
-const AddRowButton:React.FC<IAddRowButton> = ({handle,label}) => {
+const AddRowButton: React.FC<IAddRowButton> = ({ handle, label }) => {
   return (
     <>
       <Button

@@ -56,8 +56,6 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error', // Check rules of Hooks
     'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
 
-    'no-debugger':0,
-
-
+    'no-debugger': 0,
   },
 }

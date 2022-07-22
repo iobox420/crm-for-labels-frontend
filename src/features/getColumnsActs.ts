@@ -1,7 +1,12 @@
-function getColumnsActs(edKey:number | null, edit:unknown, cancel:unknown, save:unknown, deletef:unknown) {
-  const isEditing = (record:any) => record.key === edKey
+function getColumnsActs(
+  edKey: number | null,
+  edit: unknown,
+  cancel: unknown,
+  save: unknown,
+  deletef: unknown,
+) {
+  const isEditing = (record: any) => record.key === edKey
   const columns = [
-
     {
       title: 'id_act',
       dataIndex: 'id_act',
@@ -55,7 +60,7 @@ function getColumnsActs(edKey:number | null, edit:unknown, cancel:unknown, save:
           dataType: col.dataType,
           dataIndex: col.dataIndex,
           title: col.title,
-          deletef:deletef,
+          deletef: deletef,
           edit: edit,
           save: save,
           cancel: cancel,

@@ -3,10 +3,9 @@ import { Navigate, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { IRoot } from '@/processes/redux/store'
 interface IRequireAdmin {
-  children:React.ReactNode;
+  children: React.ReactNode
 }
 const RequireAdmin: React.FC<IRequireAdmin> = ({ children }: any) => {
-
   const auth = useSelector(({ auth }: IRoot) => {
     return auth
   })

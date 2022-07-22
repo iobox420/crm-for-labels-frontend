@@ -9,14 +9,13 @@ import IError from '@/processes/models/response/IError'
 import About from '@/features/About'
 
 const AboutPage: React.FC = () => {
-  const { isLoading, error, data } = useQuery<AxiosResponse<IArtist>, AxiosError<IError>>('artist/getAboutMe', () =>
-    ArtistService.getAboutMe(),
+  const { isLoading, error, data } = useQuery<AxiosResponse<IArtist>, AxiosError<IError>>(
+    'artist/getAboutMe',
+    () => ArtistService.getAboutMe(),
   )
   if (isLoading) return <Loading />
-  if (error) return <Error/>
+  if (error) return <Error />
 
-  return (
-    <About artist={data?.data as IArtist} />
-  )
+  return <About artist={data?.data as IArtist} />
 }
 export default AboutPage

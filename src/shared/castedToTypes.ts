@@ -1,6 +1,6 @@
-import moment from "moment";
+import moment from 'moment'
 
-function castedToTypes(payload:any) {
+function castedToTypes(payload: any) {
   const resultPayload = { ...payload }
   for (let prop in payload) {
     if (payload[prop] instanceof moment) {

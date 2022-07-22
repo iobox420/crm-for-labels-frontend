@@ -4,14 +4,13 @@ import { IUser } from '@/processes/models/IUser'
 import axios from 'axios'
 import { AuthResponse } from '@/processes/models/response/AuthResponse'
 
-
 interface IAuthData {
   email: string
   password: string
 }
 
- export interface ISignUpData extends IAuthData {
-  isArtist:boolean
+export interface ISignUpData extends IAuthData {
+  isArtist: boolean
 }
 
 export const login = createAsyncThunk(
@@ -22,10 +21,7 @@ export const login = createAsyncThunk(
       localStorage.setItem('token', response.data.accessToken)
       dispatch(setAuth(true))
       dispatch(setUser(response.data.user))
-    } catch (e: any) {
-      console.log('error login');
-      console.log(e.response?.data?.message)
-    }
+    } catch (e: any) {}
   },
 )
 export const signup = createAsyncThunk(
@@ -36,9 +32,7 @@ export const signup = createAsyncThunk(
       localStorage.setItem('token', response.data.accessToken)
       dispatch(setAuth(true))
       dispatch(setUser(response.data.user))
-    } catch (e: any) {
-      console.log(e.response?.data?.message)
-    }
+    } catch (e: any) {}
   },
 )
 export const logout = createAsyncThunk('auth/logout', async (arg: void, { dispatch }) => {
@@ -47,9 +41,7 @@ export const logout = createAsyncThunk('auth/logout', async (arg: void, { dispat
     dispatch(setAuth(false))
     dispatch(setUser({} as IUser))
     await AuthService.logout()
-  } catch (e: any) {
-    console.log(e.response?.data?.message)
-  }
+  } catch (e: any) {}
 })
 
 export const checkAuth = createAsyncThunk('auth/checkAuth', async (arg: void, { dispatch }) => {
@@ -62,12 +54,10 @@ export const checkAuth = createAsyncThunk('auth/checkAuth', async (arg: void, { 
     dispatch(setAuth(true))
     dispatch(setUser(response.data.user))
   } catch (e: any) {
-    console.log(e.response?.data?.message)
   } finally {
     dispatch(setLoading(false))
   }
 })
-
 
 export interface IAuth {
   user: IUser
@@ -120,7 +110,7 @@ const authSlice = createSlice({
     extractAuthData(state) {
       const isAuth = localStorage.getItem('isAuth')
       if (isAuth) {
-        state.isAuth = isAuth === 'true';
+        state.isAuth = isAuth === 'true'
         state.user.email = localStorage.getItem('email')
         state.user.id_user = localStorage.getItem('id_user')
         state.user.role = localStorage.getItem('role')

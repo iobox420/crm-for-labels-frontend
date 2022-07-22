@@ -5,7 +5,6 @@
     "dev": "vite",
     "dev2": "vite && set VITE_API_URL=http://back.divinemusic.ru/crm-api",
     "build": "tsc && vite build",
-    "build-s": "tsc-silent -p './tsconfig.json' --suppress @ && vite build",
     "preview": "vite preview"
   },
   "dependencies": {

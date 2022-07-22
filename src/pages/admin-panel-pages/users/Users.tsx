@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
-import AdminService from '@/processes/services/AdminService'
+import  { getUsers, updateUser } from "@/processes/services/AdminService";
 import { queryClient } from '@/app/main'
 import NothingData from '@/widgets/NothingData'
 import Loading from '@/widgets/Loading'
@@ -8,19 +8,17 @@ import { Form, Table } from 'antd'
 import getColumnsUsers from '@/pages/admin-panel-pages/users/getColumnsUsers'
 import Error from '@/widgets/Error'
 import EditableCell from '@/shared/EditableCell'
+import { getResCountRows } from "@/processes/models/response/getResCountRows";
+import { IUserFull } from "@/processes/models/IUser";
 
 const Users: React.FC = () => {
   const pageSize = 10
   const [edKey, setEdKey] = useState(null)
   const [page, setPage] = useState(1)
   function useArtists() {
-    return useQuery(
-      ['admin/get-users', page],
-      () => AdminService.getUsers({ page: page, limit: pageSize }),
-      { keepPreviousData: true },
-    )
+    return
   }
-  const mutation = useMutation(AdminService.updateUser, {
+  const mutation = useMutation(updateUser, {
     onSuccess: () => queryClient.invalidateQueries('admin/get-users'),
   })
 
@@ -40,7 +38,11 @@ const Users: React.FC = () => {
     mutation.mutate(artist)
     setEdKey(null)
   }
-  const { isLoading, error, data } = useArtists()
+  const { isLoading, error, data } = useQuery<getResCountRows<IUserFull[]>>(
+    ['admin/get-users', page],
+    () => getUsers({ page: page, limit: pageSize }),
+    { keepPreviousData: true },
+  )
   if (isLoading) return <Loading />
   if (error) {
     if (error instanceof Error) {

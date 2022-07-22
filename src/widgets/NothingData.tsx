@@ -1,6 +1,5 @@
 import React from 'react'
-const NothingData:React.FC = () => {
-
+const NothingData: React.FC = () => {
   return <div>NothingData</div>
 }
 

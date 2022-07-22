@@ -17,7 +17,6 @@ import MyContractPage from '../pages/artist-panel-pages/MyContractPage'
 import Artists from '@/pages/admin-panel-pages/artists/Artists'
 import Users from '@/pages/admin-panel-pages/users/Users'
 
-
 function App() {
   const dispatch = useAppDispatch()
   useEffect(() => {

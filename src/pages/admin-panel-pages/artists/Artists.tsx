@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
-import AdminService from '@/processes/services/AdminService'
+import AdminService, { getArtists, updateArtist } from "@/processes/services/AdminService";
 import { queryClient } from '@/app/main'
 import NothingData from '@/widgets/NothingData'
 import Loading from '@/widgets/Loading'
@@ -16,11 +16,11 @@ const Artists: React.FC = () => {
   function useArtists() {
     return useQuery(
       ['admin/get-artists', page],
-      () => AdminService.getArtists({ page: page, limit: pageSize }),
+      () => getArtists({ page: page, limit: pageSize }),
       { keepPreviousData: true },
     )
   }
-  const mutation = useMutation(AdminService.updateArtist, {
+  const mutation = useMutation(updateArtist, {
     onSuccess: () => queryClient.invalidateQueries('admin/get-artists'),
   })
 
