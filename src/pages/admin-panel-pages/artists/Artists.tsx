@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
-import AdminService, { getArtists, updateArtist } from "@/processes/services/AdminService";
+import { getArtists, updateArtist } from '@/processes/services/AdminService'
 import { queryClient } from '@/app/main'
 import NothingData from '@/widgets/NothingData'
 import Loading from '@/widgets/Loading'
@@ -13,13 +13,7 @@ const Artists: React.FC = () => {
   const pageSize = 10
   const [edKey, setEdKey] = useState(null)
   const [page, setPage] = useState(1)
-  function useArtists() {
-    return useQuery(
-      ['admin/get-artists', page],
-      () => getArtists({ page: page, limit: pageSize }),
-      { keepPreviousData: true },
-    )
-  }
+
   const mutation = useMutation(updateArtist, {
     onSuccess: () => queryClient.invalidateQueries('admin/get-artists'),
   })
@@ -40,7 +34,11 @@ const Artists: React.FC = () => {
     mutation.mutate(artist)
     setEdKey(null)
   }
-  const { isLoading, error, data } = useArtists()
+  const { isLoading, error, data } = useQuery(
+    ['admin/get-artists', page, pageSize],
+    () => getArtists({ page: page, limit: pageSize }),
+    { keepPreviousData: true },
+  )
 
   if (isLoading) return <Loading />
 
@@ -58,6 +56,7 @@ const Artists: React.FC = () => {
                   cell: EditableCell,
                 },
               }}
+              rowKey={'id_artist_contract'}
               dataSource={data.rows}
               columns={columns}
               pagination={{

@@ -15,9 +15,7 @@ const Users: React.FC = () => {
   const pageSize = 10
   const [edKey, setEdKey] = useState(null)
   const [page, setPage] = useState(1)
-  function useArtists() {
-    return
-  }
+
   const mutation = useMutation(updateUser, {
     onSuccess: () => queryClient.invalidateQueries('admin/get-users'),
   })
@@ -39,7 +37,7 @@ const Users: React.FC = () => {
     setEdKey(null)
   }
   const { isLoading, error, data } = useQuery<getResCountRows<IUserFull[]>>(
-    ['admin/get-users', page],
+    ['admin/get-users', page,pageSize],
     () => getUsers({ page: page, limit: pageSize }),
     { keepPreviousData: true },
   )
@@ -63,6 +61,7 @@ const Users: React.FC = () => {
                   cell: EditableCell,
                 },
               }}
+              rowKey={'id_user'}
               dataSource={data.rows}
               columns={columns}
               pagination={{

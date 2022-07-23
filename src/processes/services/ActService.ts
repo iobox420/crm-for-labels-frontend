@@ -3,7 +3,6 @@ import $api from '@/processes/http/api'
 import castedToTypes from '@/shared/castedToTypes'
 import { PageLimitWithIdArtist } from '@/processes/models/PageLimit'
 import moment from 'moment'
-import addKey from '@/shared/addKey'
 
 interface IIdArtist {
   fk_id_artist_contract: string | number
@@ -13,8 +12,8 @@ export async function getActs(props: PageLimitWithIdArtist) {
   const data = await $api.get('/admin/get-acts', {
     params: props,
   })
-  const rows = addKey(data.data.rows)
-  const rowsCastDateFields = rows.map((act: IAct) => {
+
+  const rowsCastDateFields = data.data.rows.map((act: IAct) => {
     return {
       ...act,
       createdAt: moment(act.createdAt),

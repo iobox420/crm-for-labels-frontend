@@ -245,7 +245,7 @@ const EditableCell: React.FC<IEditableCell> = ({
   if (dataType === 'link') {
     return (
       <td {...restProps}>
-        <Link to={`/users/${record[linkfield]}`}>to artist page</Link>
+        <Link to={`${record[linkfield]}`}>to artist page</Link>
       </td>
     )
   }

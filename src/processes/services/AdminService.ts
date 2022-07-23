@@ -7,12 +7,11 @@ import moment from 'moment'
 
 export async function getArtists(props: PageLimit) {
   const artists = await $api.get('/admin/get-artists', { params: props })
-  const rows = artists?.data.rows.map((artist: IArtist, i: number) => {
+  const rows = artists?.data.rows.map((artist: IArtist) => {
     return {
       ...artist,
       contract_agreement: moment(artist.contract_agreement),
       contract_expiration_date: moment(artist.contract_expiration_date),
-      key: i,
     }
   })
   return {
@@ -31,7 +30,17 @@ export async function addArtist(artist: IArtist) {
 
 export async function getUsers(props: PageLimit) {
   const data = await $api.get('/admin/get-users', { params: props })
-  const rows = data?.data.rows.map((user: IUserFull, i: number) => {})
+  const rows = data?.data.rows.map((user: IUserFull) => {
+    return {
+      ...user,
+      createdAt: moment(user.createdAt),
+      updatedAt: moment(user.updatedAt),
+    }
+  })
+  return {
+    rows: rows,
+    count: data.data.count,
+  }
 }
 
 export async function getAboutArtist(prop: { id_artist_contract: string | undefined }) {
