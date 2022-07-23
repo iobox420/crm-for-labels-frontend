@@ -10,17 +10,13 @@ export const queryClient = new QueryClient()
 ReactDOM.render(
   <Router>
     <QueryClientProvider client={queryClient}>
-    <Provider store={store}>
-      <div>
-        <App />
-      </div>
-    </Provider>
+      <Provider store={store}>
+        <div>
+          <App />
+        </div>
+      </Provider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </Router>,
   document.getElementById('root'),
 )
-
-
-
-

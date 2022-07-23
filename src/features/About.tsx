@@ -3,7 +3,7 @@ import { Card, Space, Typography } from 'antd'
 import { IArtist } from '@/processes/models/IArtist'
 const { Title } = Typography
 interface IAboutPage {
-  artist:IArtist
+  artist: IArtist
 }
 const About: React.FC<IAboutPage> = ({ artist }) => {
   return (

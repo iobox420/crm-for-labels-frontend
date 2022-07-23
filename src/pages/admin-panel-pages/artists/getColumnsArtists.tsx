@@ -1,8 +1,8 @@
 import React from 'react'
-import { IArtist } from "@/processes/models/IArtist";
+import { IArtist } from '@/processes/models/IArtist'
 
-function getColumnsArtists(edKey:number | null, edit:unknown, cancel:unknown, save:unknown) {
-  const isEditing = (record:IArtist) => record.key === edKey
+function getColumnsArtists(edKey: number | null, edit: unknown, cancel: unknown, save: unknown) {
+  const isEditing = (record: IArtist) => record.key === edKey
 
   const columns = [
     {

@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { IArtist } from '@/processes/models/IArtist'
 
-export interface Irq {
+export interface ISelectedArtistsSlice {
   selectedArtist: IArtist
-  selectedArtistId:string | undefined
+  selectedArtistId: string | undefined
 }
 
 const initialState = {
   selectedArtist: {},
-  selectedArtistId:undefined
-} as Irq
+  selectedArtistId: undefined,
+} as ISelectedArtistsSlice
 
 const reactQuerySlice = createSlice({
   name: 'rq',
@@ -25,4 +25,4 @@ const reactQuerySlice = createSlice({
 })
 
 export default reactQuerySlice.reducer
-export const { setSelectedArtistId,setSelectedArtist } = reactQuerySlice.actions
+export const { setSelectedArtistId, setSelectedArtist } = reactQuerySlice.actions

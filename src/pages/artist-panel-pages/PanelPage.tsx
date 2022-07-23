@@ -76,7 +76,6 @@ const { Header, Content } = Layout
 const PanelPage = () => {
   const dispatch = useAppDispatch()
 
-
   const [current, setCurrent] = useState('mail')
   let url = useLocation().pathname
   let navigate = useNavigate()
@@ -100,9 +99,11 @@ const PanelPage = () => {
   }
 
   return (
-    <Layout style={{
-      height: '100vh',
-    }}>
+    <Layout
+      style={{
+        height: '100vh',
+      }}
+    >
       <Header
         style={{
           position: 'fixed',

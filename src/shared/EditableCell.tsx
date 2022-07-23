@@ -65,7 +65,6 @@ const EditableCell: React.FC<IEditableCell> = ({
                 margin: 0,
               }}
               getValueFromEvent={e => {
-                console.log('Upload event:', e)
                 if (Array.isArray(e)) {
                   return e
                 }
@@ -246,7 +245,7 @@ const EditableCell: React.FC<IEditableCell> = ({
   if (dataType === 'link') {
     return (
       <td {...restProps}>
-        <Link to={`/users/${record[linkfield]}`}>to artist page</Link>
+        <Link to={`${record[linkfield]}`}>to artist page</Link>
       </td>
     )
   }
@@ -282,7 +281,6 @@ const EditableCell: React.FC<IEditableCell> = ({
             >
               Cancel
             </Typography.Link>
-
           </span>
         </td>
       ) : (

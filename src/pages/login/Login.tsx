@@ -26,7 +26,6 @@ const Login: React.FC = () => {
   }, [auth, navigate])
   const dispatch = useDispatch()
   const onFinish = (values: { username: string; password: string }) => {
-    console.log('Received values of form: ', values)
     dispatch<any>(
       login({
         email: values.username,

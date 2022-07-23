@@ -25,7 +25,8 @@ const Redirect: React.FC = () => {
         <Navigate to={'/login'} state={{ from: location }} />
       </React.Fragment>
     )
-  } return null
+  }
+  return null
 }
 
 export default Redirect

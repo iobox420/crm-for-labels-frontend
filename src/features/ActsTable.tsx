@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { Card, Form, Space, Table } from 'antd'
 import { useMutation, useQuery } from 'react-query'
-import AdminService from '@/processes/services/AdminService'
-import { useAppSelector } from '@/processes/redux/hooks'
 import Loading from '@/widgets/Loading'
 import Error from '@/widgets/Error'
 import { queryClient } from '@/app/main'
@@ -10,34 +8,28 @@ import NothingData from '@/widgets/NothingData'
 import AddRowButton from '@/shared/AddRowButton'
 import getColumnsActs from '@/features/getColumnsActs'
 import EditableCell from '@/shared/EditableCell'
-import ActService from '@/processes/services/ActService'
+import { createAct, deleteAct, getActs, updateAct } from '@/processes/services/ActService'
 
-const ActsTable: React.FC = () => {
-  const rq = useAppSelector(({ rq }) => rq)
+interface ICurrentArtistTables {
+  id: string | undefined
+}
+
+const ActsTable: React.FC<ICurrentArtistTables> = ({ id }) => {
+  console.log(id)
+
   const pageSize = 10
   const [edKey, setEdKey] = useState(null)
   const [page, setPage] = useState(1)
 
-  const useActs = () => {
-    return useQuery(['get-acts', page], () =>
-      AdminService.getActs({
-        page: page,
-        limit: pageSize,
-        fk_id_artist_contract: rq.selectedArtistId!,
-      }),
-    )
-  }
-
-  const putActMut = useMutation(ActService.putAct,{
-    onSuccess: () => queryClient.invalidateQueries('get-acts')
+  const putActMut = useMutation(updateAct, {
+    onSuccess: () => queryClient.invalidateQueries('get-acts'),
   })
-  const postActMut = useMutation(ActService.postAct,{
-    onSuccess: () => queryClient.invalidateQueries('get-acts')
+  const postActMut = useMutation(createAct, {
+    onSuccess: () => queryClient.invalidateQueries('get-acts'),
   })
-  const deleteActMut = useMutation(ActService.deletAct,{
-    onSuccess: () => queryClient.invalidateQueries('get-acts')
+  const deleteActMut = useMutation(deleteAct, {
+    onSuccess: () => queryClient.invalidateQueries('get-acts'),
   })
-
 
   const [form] = Form.useForm()
 
@@ -54,24 +46,34 @@ const ActsTable: React.FC = () => {
 
   async function save() {
     const act = await form.validateFields()
-    console.log(act)
+
     putActMut.mutate(act)
     setEdKey(null)
   }
+
   async function deletef() {
     const act = await form.validateFields()
-    console.log(act)
+
     deleteActMut.mutate(act)
     setEdKey(null)
   }
 
   const handleAdd = () => {
     postActMut.mutate({
-      fk_id_artist_contract: rq.selectedArtistId!,
+      fk_id_artist_contract: id!,
     })
   }
 
-  const { isLoading, isIdle, error, data } = useActs()
+  const { isLoading, isIdle, error, data } = useQuery(
+    ['get-acts', page, pageSize],
+    () =>
+      getActs({
+        page: page,
+        limit: pageSize,
+        fk_id_artist_contract: id!,
+      }),
+    { keepPreviousData: true },
+  )
   if (isLoading || isIdle) return <Loading />
   if (error) return <Error />
 
@@ -89,6 +91,7 @@ const ActsTable: React.FC = () => {
                     cell: EditableCell,
                   },
                 }}
+                rowKey={'id_act'}
                 dataSource={data.rows}
                 columns={columns}
                 pagination={{

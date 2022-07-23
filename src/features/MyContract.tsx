@@ -3,7 +3,7 @@ import { Card, Space } from 'antd'
 import { IArtist } from '@/processes/models/IArtist'
 
 interface IMyContractPage {
-  artist:IArtist
+  artist: IArtist
 }
 const MyContract: React.FC<IMyContractPage> = ({ artist }) => {
   return (
@@ -18,8 +18,8 @@ const MyContract: React.FC<IMyContractPage> = ({ artist }) => {
           <p>contract expiration_date: {artist.contract_expiration_date}</p>
         </Card>
       </Space>
-  </div>
-)
+    </div>
+  )
 }
 
 export default MyContract

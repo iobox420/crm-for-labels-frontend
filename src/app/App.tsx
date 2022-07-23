@@ -3,7 +3,6 @@ import './App.css'
 import Login from '../pages/login/Login'
 import Registration from '@/pages/registration/Registration'
 import AdminPanel from '@/pages/admin-panel-pages/AdminPanel'
-import RequireAdmin from '../hoc/RequireAdmin'
 import Redirect from '@/hoc/Redirect'
 import React, { useEffect } from 'react'
 import { extractAuthData } from '@/processes/redux/authSlice'
@@ -11,12 +10,10 @@ import NotActivated from '@/pages/not-activated/NotActivated'
 import { useAppDispatch } from '@/processes/redux/hooks'
 import CurrentArtist from '../pages/admin-panel-pages/CurrentArtist'
 import PanelPage from '../pages/artist-panel-pages/PanelPage'
-import RequireArtist from '../hoc/RequireArtist'
 import AboutPage from '../pages/artist-panel-pages/AboutPage'
 import MyContractPage from '../pages/artist-panel-pages/MyContractPage'
 import Artists from '@/pages/admin-panel-pages/artists/Artists'
 import Users from '@/pages/admin-panel-pages/users/Users'
-import Tracks from '@/pages/admin-panel-pages/tracks/Tracks'
 
 function App() {
   const dispatch = useAppDispatch()
@@ -27,97 +24,18 @@ function App() {
   return (
     <div className="app-wrapper">
       <Routes>
-        <Route
-          path="/panel/*"
-          element={
-            <RequireArtist>
-              <PanelPage />
-            </RequireArtist>
-          }
-        >
-          <Route
-            index
-            element={
-              <RequireArtist>
-                <AboutPage />
-              </RequireArtist>
-            }
-          />
-          <Route
-            path="about-me"
-            element={
-              <RequireArtist>
-                <AboutPage />
-              </RequireArtist>
-            }
-          />
-          <Route
-            path="my-contract"
-            element={
-              <RequireArtist>
-                <MyContractPage />
-              </RequireArtist>
-            }
-          />
-          <Route
-            path="acts"
-            element={
-              <RequireArtist>
-                <>acts</>
-              </RequireArtist>
-            }
-          />
+        <Route path="/panel/*" element={<PanelPage />}>
+          <Route index element={<AboutPage />} />
+          <Route path="about-me" element={<AboutPage />} />
+          <Route path="my-contract" element={<MyContractPage />} />
+          <Route path="acts" element={<>acts</>} />
         </Route>
-        <Route
-          path="/admin-panel/*"
-          element={
-            <RequireAdmin>
-              <AdminPanel />
-            </RequireAdmin>
-          }
-        >
-          <Route
-            path="artists/:id"
-            element={
-              <RequireAdmin>
-                <CurrentArtist />
-              </RequireAdmin>
-            }
-          />
-          <Route
-            index
-            element={
-              <RequireAdmin>
-                <Users />
-              </RequireAdmin>
-            }
-          />
-          <Route
-            path="artists"
-            element={
-              <RequireAdmin>
-                <Artists />
-              </RequireAdmin>
-            }
-          />
-          <Route
-            path="tracks"
-            element={
-              <RequireAdmin>
-                <Tracks />
-              </RequireAdmin>
-            }
-          />
-          <Route
-            path="users"
-            element={
-              <RequireAdmin>
-                <Users />
-              </RequireAdmin>
-            }
-          />
+        <Route path="/admin-panel/*" element={<AdminPanel />}>
+          <Route path="artists/:id" element={<CurrentArtist />} />
+          <Route index element={<div>index page</div>} />
+          <Route path="artists" element={<Artists />} />
+          <Route path="users" element={<Users />} />
         </Route>
-        <Route path="/users/:id" element={<CurrentArtist />} />
         <Route path="/" element={<Redirect />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Registration />} />

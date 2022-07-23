@@ -27,7 +27,6 @@ const items: MenuProps['items'] = [
             label: 'All tracks',
             key: 'key-all-tracks',
           },
-
         ],
       },
       {
@@ -37,7 +36,7 @@ const items: MenuProps['items'] = [
     ],
   },
 ]
-const { Header,  Content } = Layout
+const { Header, Content } = Layout
 const AdminPanel = () => {
   const dispatch = useAppDispatch()
 
