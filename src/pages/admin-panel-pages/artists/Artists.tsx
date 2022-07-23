@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
-import AdminService, { getArtists, updateArtist } from "@/processes/services/AdminService";
+import { getArtists, updateArtist } from '@/processes/services/AdminService'
 import { queryClient } from '@/app/main'
 import NothingData from '@/widgets/NothingData'
 import Loading from '@/widgets/Loading'
